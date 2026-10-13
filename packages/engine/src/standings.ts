@@ -7,7 +7,7 @@
  *   CCC = OOMW% (match-win % de los oponentes de tus oponentes)
  *   DDD = suma de los CUADRADOS de las rondas en que perdiste (menor = mejor)
  *
- * Orden de desempate: Puntos → OMW% → OOMW% → DDD.
+ * Orden de desempate: Puntos → OMW% → OOMW% → DDD → enfrentamiento directo → alfabético.
  * No existe "game-win %" en Yu-Gi-Oh (eso es de Magic): un 2-0 y un 2-1 valen lo mismo.
  *
  * Supuestos (documentados, refinables según el KTS real):
@@ -100,6 +100,23 @@ function meanOr(values: number[], fallback: number): number {
   return values.reduce((a, b) => a + b, 0) / values.length;
 }
 
+/**
+ * Desempate final por enfrentamiento directo (política: si dos duelistas quedan
+ * empatados en TODO, gana quien ganó su partida).
+ * Devuelve <0 si `aId` va primero, >0 si `bId`, 0 si no jugaron o fue doble loss.
+ */
+export function headToHead(aId: string, bId: string, matches: Match[]): number {
+  for (const m of matches) {
+    const between =
+      (m.player1Id === aId && m.player2Id === bId) || (m.player1Id === bId && m.player2Id === aId);
+    if (!between || m.outcome === null) continue;
+    if (m.outcome === 'P1_WIN') return m.player1Id === aId ? -1 : 1;
+    if (m.outcome === 'P2_WIN') return m.player2Id === aId ? -1 : 1;
+    return 0; // doble loss: sin ganador
+  }
+  return 0;
+}
+
 export function computeStandings(players: Player[], matches: Match[]): Standing[] {
   const stats = new Map<string, Stats>();
   for (const p of players) stats.set(p.id, collectStats(p.id, matches));
@@ -146,6 +163,7 @@ export function computeStandings(players: Player[], matches: Match[]): Standing[
       b.omw - a.omw ||
       b.oomw - a.oomw ||
       a.ddd - b.ddd ||
+      headToHead(a.player.id, b.player.id, matches) ||
       a.player.name.localeCompare(b.player.name),
   );
 

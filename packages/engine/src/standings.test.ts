@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Match, Player } from './model.js';
-import { computeStandings } from './standings.js';
+import { computeStandings, headToHead } from './standings.js';
 
 function p(id: string): Player {
   return { id, name: id };
@@ -119,5 +119,25 @@ describe('computeStandings', () => {
     expect(s.map((x) => x.player.id)).toEqual(['A', 'B', 'C', 'D']);
     expect(byId(s, 'B').ddd).toBe(1);
     expect(byId(s, 'C').ddd).toBe(4);
+  });
+
+  it('headToHead: gana el que ganó el enfrentamiento directo', () => {
+    const matches = [m('r1', 1, 1, 'A', 'B', 'P1_WIN')];
+    expect(headToHead('A', 'B', matches)).toBeLessThan(0); // A va primero
+    expect(headToHead('B', 'A', matches)).toBeGreaterThan(0); // B va después
+    expect(headToHead('A', 'C', matches)).toBe(0); // no jugaron
+  });
+
+  it('cadena completa de desempates (puntos, OMW, OOMW, DDD) con 4 empatados', () => {
+    const players = [p('A'), p('B'), p('C'), p('D')];
+    const matches = [
+      m('r1-1', 1, 1, 'A', 'B', 'P1_WIN'),
+      m('r1-2', 1, 2, 'C', 'D', 'P1_WIN'),
+      m('r2-1', 2, 1, 'B', 'C', 'P1_WIN'), // B pierde R1 (DDD 1)
+      m('r2-2', 2, 2, 'D', 'A', 'P1_WIN'), // A pierde R2 (DDD 4)
+    ];
+    const s = computeStandings(players, matches);
+    // Todos 3 pts y OMW/OOMW 0.5; el DDD decide: B=1, D=1, A=4, C=4.
+    expect(s.map((x) => x.player.id)).toEqual(['B', 'D', 'A', 'C']);
   });
 });
