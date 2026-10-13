@@ -142,8 +142,16 @@ export default function App() {
   }
 
   function goTo(id: View): void {
-    if (id === 'tournament' && tournament?.status === 'finished') setView('final');
-    else setView(id);
+    if (id === 'torneos') {
+      const active = summaries.filter((s) => s.status !== 'finished');
+      if (active.length === 1) {
+        void openTournament(active[0].id);
+        return;
+      }
+      setView('torneos');
+      return;
+    }
+    setView(id);
   }
 
   function isActive(id: View): boolean {
