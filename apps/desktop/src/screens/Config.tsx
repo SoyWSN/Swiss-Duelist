@@ -13,7 +13,7 @@ export default function Config({ clockOn, onToggleClock, confettiOn, onToggleCon
       <img className="bg-art" src="/bitron.png" alt="" />
       <div className="layer">
         <div className="tour-head">
-          <div className="tt">Configuración<small>preferencias de la app</small></div>
+          <div className="tt">Ajustes<small>preferencias de la app</small></div>
         </div>
         <div className="cfg-list">
           <div className="cfg-row">

@@ -154,7 +154,7 @@ export default function App() {
     { id: 'home', label: 'Inicio', Icon: IconHome },
     { id: 'tournament', label: 'Torneo', Icon: IconTrophy, disabled: !tournament },
     { id: 'create', label: 'Nuevo torneo', Icon: IconPlus },
-    { id: 'config', label: 'Configuración', Icon: IconSettings },
+    { id: 'config', label: 'Ajustes', Icon: IconSettings },
   ];
 
   return (
@@ -165,7 +165,7 @@ export default function App() {
           <div><b>Swiss Duelist</b><small>Torneos suizos</small></div>
         </div>
         <nav className="anav">
-          <div className="anl">Menú</div>
+          <div className="anl">Secciones</div>
           {nav.map((n) => (
             <button
               key={n.id}

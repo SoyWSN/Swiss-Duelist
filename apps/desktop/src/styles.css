@@ -146,7 +146,7 @@ button { font-family: inherit; }
 /* ── torneo ── */
 .tour-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
 .tour-head .tt { font-size: 16px; font-weight: 800; }
-.tour-head .tt small { display: block; font-size: 10.5px; color: var(--tx-3); font-weight: 600; letter-spacing: .6px; text-transform: uppercase; }
+.tour-head .tt small { display: block; font-size: 13px; color: var(--tx-3); font-weight: 600; letter-spacing: .8px; text-transform: uppercase; }
 .tour-head .sp2 { margin-left: auto; display: flex; gap: 8px; }
 .subt { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 4px; margin-bottom: 14px; width: max-content; }
 .subt button { padding: 7px 16px; border-radius: 9px; border: none; background: transparent; color: var(--tx-2); font: 600 13px inherit; cursor: pointer; }
@@ -235,9 +235,11 @@ button { font-family: inherit; }
 .empty .empty-icon { width: 44px; height: 44px; margin: 0 auto 14px; color: var(--o-400); }
 .empty-art { display: block; width: min(240px, 60%); max-height: 240px; object-fit: contain; margin: 0 auto 20px; }
 .error { display: flex; align-items: center; gap: 6px; color: #ff7a96; background: rgba(244,63,94,.09); border: 1px solid rgba(244,63,94,.35); border-radius: 8px; padding: 7px 11px; font-size: 12px; font-weight: 600; margin-top: 8px; }
-.ctime { font-variant-numeric: tabular-nums; }
-.ctoggle { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; border: none; background: rgba(255,255,255,.14); color: inherit; cursor: pointer; padding: 0; }
-.ctoggle:hover { background: rgba(255,255,255,.26); }
+.clock { display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,.16); border: 1px solid rgba(249,115,22,.45); border-radius: 11px; padding: 5px 8px 5px 14px; color: #ffb27a; }
+.clock .ctime { font-family: 'Consolas', ui-monospace, monospace; font-size: 22px; font-weight: 700; line-height: 1; letter-spacing: 1px; font-variant-numeric: tabular-nums; }
+.clock .ctoggle { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; border: none; background: rgba(255,255,255,.16); color: inherit; cursor: pointer; padding: 0; }
+.clock .ctoggle:hover { background: rgba(255,255,255,.28); }
+.chip-lg { font-size: 13px; padding: 5px 12px; }
 .num-input { background: var(--surface-2); border: 1px solid var(--line-2); border-radius: 9px; color: var(--tx-1); padding: 6px 10px; width: 72px; text-align: center; font: 600 13px inherit; }
 .num-input:focus { outline: none; border-color: var(--o-400); }
 

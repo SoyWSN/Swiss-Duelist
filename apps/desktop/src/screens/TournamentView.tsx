@@ -41,15 +41,15 @@ function RoundClock({ round, minutes, visible }: { round: number; minutes: numbe
   const ss = String(remaining % 60).padStart(2, '0');
 
   return (
-    <span className={`chip chip-o ${running ? 'chip-live' : ''}`}>
-      <IconClock size={14} />
+    <span className={`clock ${running ? 'chip-live' : ''}`}>
+      <IconClock size={18} />
       <span className="ctime">{mm}:{ss}</span>
       <button
         className="ctoggle"
         onClick={() => setRunning((r) => !r)}
         title={running ? 'Pausar reloj' : 'Iniciar reloj'}
       >
-        {running ? <IconPause size={11} /> : <IconPlay size={11} />}
+        {running ? <IconPause size={13} /> : <IconPlay size={13} />}
       </button>
     </span>
   );
@@ -233,7 +233,7 @@ export default function TournamentView({ tournament, standings, clockOn, roundMi
           <small>ronda {tournament.currentRound} de {tournament.totalRounds} · creado {new Date(tournament.createdAt).toLocaleDateString()}</small>
         </div>
         <RoundClock round={tournament.currentRound} minutes={roundMinutes} visible={clockOn} />
-        <span className="chip chip-ok">{reported}/{currentMatches.length} reportadas</span>
+        <span className="chip chip-ok chip-lg">{reported}/{currentMatches.length} reportadas</span>
         <div className="sp2">
           <button className="btn btn-pri" onClick={() => setConfirming(true)} disabled={!roundComplete}>
             {isLastRound ? 'Finalizar torneo' : 'Siguiente ronda'}
@@ -243,7 +243,7 @@ export default function TournamentView({ tournament, standings, clockOn, roundMi
 
       <div className="subt">
         <button className={tab === 'ronda' ? 'on' : ''} onClick={() => setTab('ronda')}>Ronda actual</button>
-        <button className={tab === 'clasi' ? 'on' : ''} onClick={() => setTab('clasi')}>Clasificación</button>
+        <button className={tab === 'clasi' ? 'on' : ''} onClick={() => setTab('clasi')}>Ranking</button>
       </div>
 
       {tab === 'ronda' ? (

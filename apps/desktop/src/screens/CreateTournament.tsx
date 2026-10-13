@@ -48,12 +48,12 @@ export default function CreateTournament({ draft, onDraftChange, onStart, onBack
     setInput('');
   }
 
-  function continueFromStep1() {
-    if (!name.trim()) {
-      setNameError(true);
-      return;
+  function goToStep(n: number) {
+    if (n > step) {
+      if (n >= 2 && !name.trim()) { setNameError(true); return; }
+      if (n >= 3 && players.length < 2) return;
     }
-    update({ step: 2 });
+    update({ step: n });
   }
 
   function removePlayer(n: string) {
@@ -65,17 +65,17 @@ export default function CreateTournament({ draft, onDraftChange, onStart, onBack
       <img className={`bg-art${step === 1 ? ' bg-art-lg' : ''}`} key={`art-${step}`} src={ART[step]} alt="" />
       <div className="wiz">
         <div className="steps">
-          <div className={`step ${step === 1 ? 'now' : step > 1 ? 'done' : ''}`} onClick={() => update({ step: 1 })}>
+          <div className={`step ${step === 1 ? 'now' : step > 1 ? 'done' : ''}`} onClick={() => goToStep(1)}>
             <span className="sn">{step > 1 ? '✓' : '1'}</span>
             <div><b>Datos</b><small>Nombre</small></div>
           </div>
-          <div className={`step ${step === 2 ? 'now' : step > 2 ? 'done' : ''}`} onClick={() => update({ step: 2 })}>
+          <div className={`step ${step === 2 ? 'now' : step > 2 ? 'done' : ''}`} onClick={() => goToStep(2)}>
             <span className="sn">{step > 2 ? '✓' : '2'}</span>
             <div><b>Duelistas</b><small>Solo el nombre</small></div>
           </div>
           <div className={`step ${step === 3 ? 'now' : ''}`}>
             <span className="sn">3</span>
-            <div><b>Revisión</b><small>Confirmar</small></div>
+            <div><b>Resumen</b><small>Confirmar</small></div>
           </div>
         </div>
 
@@ -90,7 +90,7 @@ export default function CreateTournament({ draft, onDraftChange, onStart, onBack
                     value={name}
                     maxLength={40}
                     onChange={(e) => { update({ name: e.target.value }); setNameError(false); }}
-                    onKeyDown={(e) => { if (e.key === 'Enter') continueFromStep1(); }}
+                    onKeyDown={(e) => { if (e.key === 'Enter') goToStep(2); }}
                     placeholder="Ej. Liga OTS Otoño 2026"
                     autoFocus
                   />
@@ -101,7 +101,7 @@ export default function CreateTournament({ draft, onDraftChange, onStart, onBack
               </div>
               <div className="wfoot">
                 <button className="btn btn-ghost" onClick={onBack}>Cancelar</button>
-                <button className="btn btn-pri" onClick={continueFromStep1}>Continuar →</button>
+                <button className="btn btn-pri" onClick={() => goToStep(2)}>Continuar →</button>
               </div>
             </>
           )}

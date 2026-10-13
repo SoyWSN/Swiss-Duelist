@@ -26,7 +26,7 @@ export default function Home({ summaries, onCreate, onOpen, onDelete }: Props) {
       {summaries.length === 0 ? (
         <div className="empty">
           <img className="empty-art" src="/uuy.png" alt="" />
-          <h3>No hay torneos todavía</h3>
+          <h3>No hay torneos</h3>
           <p>Crea tu primer torneo y empieza a emparejar.</p>
           <button className="btn btn-pri" onClick={onCreate}>
             <IconPlus size={16} /> Crear torneo
