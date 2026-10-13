@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { roundsForPlayerCount } from '@swiss-duelist/engine';
-import { IconPlay, IconPlus, IconX } from '../components/icons';
+import { IconAlert, IconPlay, IconPlus, IconX } from '../components/icons';
 
 /** Arte decorativo por paso del asistente. */
 const ART: Record<number, string> = { 1: '/wiz-1.png', 2: '/wiz-2.png', 3: '/wiz-3.png' };
@@ -84,7 +84,7 @@ export default function CreateTournament({ onStart, onBack }: Props) {
                 />
               </div>
               {nameError && !name.trim() && (
-                <p className="error">El torneo necesita un nombre.</p>
+                <p className="error"><IconAlert size={14} /> El torneo necesita un nombre.</p>
               )}
             </div>
             <div className="wfoot">
@@ -113,7 +113,7 @@ export default function CreateTournament({ onStart, onBack }: Props) {
                 <button className="btn btn-sec" onClick={addPlayer}><IconPlus size={16} /> Agregar</button>
               </div>
               {dupError && (
-                <p className="error">Ya hay un participante con ese nombre.</p>
+                <p className="error"><IconAlert size={14} /> Ya hay un participante con ese nombre.</p>
               )}
               {players.length > 0 ? (
                 <ul className="dlist" ref={listRef}>

@@ -3,6 +3,7 @@ import type { MatchOutcome, Tournament } from '@swiss-duelist/engine';
 import { computeStandings, createTournament, pairRound, roundsForPlayerCount } from '@swiss-duelist/engine';
 import { listTournaments, loadTournament, saveTournament, deleteTournament, type TournamentSummary } from './db/repo';
 import { initDb } from './db/db';
+import { fireSideCannons } from './lib/confetti';
 import { IconHome, IconPlus, IconSettings, IconTrophy } from './components/icons';
 import Home from './screens/Home';
 import CreateTournament from './screens/CreateTournament';
@@ -91,6 +92,7 @@ export default function App() {
         t.status = 'finished';
         t.finishedAt = new Date().toISOString();
       });
+      setTimeout(() => fireSideCannons(), 150);
       setView('final');
     } else {
       mutate((t) => {
