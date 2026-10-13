@@ -247,7 +247,8 @@ button { font-family: inherit; }
 .wiz { position: relative; z-index: 1; }
 .wiz-main { min-width: 0; }
 .step-fade { min-width: 0; animation: viewfade .25s ease; }
-.wiz-art {
+.layer { position: relative; z-index: 1; }
+.bg-art {
   position: fixed;
   right: 0;
   bottom: 0;
@@ -263,7 +264,7 @@ button { font-family: inherit; }
   -webkit-mask-image: linear-gradient(to top left, #000 58%, transparent 95%);
   mask-image: linear-gradient(to top left, #000 58%, transparent 95%);
 }
-@media (max-width: 940px) { .wiz-art { display: none; } }
+@media (max-width: 940px) { .bg-art { display: none; } }
 
 .rcard { transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease; }
 .rcard:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -18px rgba(0,0,0,.7); }

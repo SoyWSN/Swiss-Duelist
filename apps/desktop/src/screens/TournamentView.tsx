@@ -196,6 +196,8 @@ export default function TournamentView({ tournament, standings, clockOn, onRecor
 
   return (
     <>
+      <img className="bg-art" src="/ronda.png" alt="" />
+      <div className="layer">
       <div className="tour-head">
         <div className="tt">
           {tournament.name}
@@ -264,6 +266,7 @@ export default function TournamentView({ tournament, standings, clockOn, onRecor
           </div>
         </>
       )}
+      </div>
 
       {editingMatch && p1 && (
         <ResultModal
