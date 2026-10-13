@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Blocktrain';
+  src: url('/fonts/blocktrain.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --o-300: #fdba74; --o-400: #fb8f3c; --o-500: #f97316; --o-600: #ea580c; --o-700: #c2410c;
   --bg-app: #0c0f16; --surface: #12161f; --surface-2: #171c28; --surface-3: #1d2433;
@@ -232,6 +240,13 @@ button { font-family: inherit; }
 .ctoggle:hover { background: rgba(255,255,255,.26); }
 .num-input { background: var(--surface-2); border: 1px solid var(--line-2); border-radius: 9px; color: var(--tx-1); padding: 6px 10px; width: 72px; text-align: center; font: 600 13px inherit; }
 .num-input:focus { outline: none; border-color: var(--o-400); }
+
+/* ── tipografía display (Blocktrain) ── */
+.logo b, .tt, .home-head h2, .empty h3, .btn, .chip, .mn,
+.mhead b, .vp b, .pod b, .mp b, .step b, .field label, .anl, .subt button {
+  font-family: 'Blocktrain', 'Segoe UI', system-ui, sans-serif;
+  letter-spacing: .4px;
+}
 .empty h3 { color: var(--tx-1); font-size: 16px; margin-bottom: 6px; }
 .empty p { margin-bottom: 18px; font-size: 13.5px; }
 .ic { display: inline-flex; align-items: center; justify-content: center; }
