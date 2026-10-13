@@ -6,6 +6,8 @@ interface Props {
 export default function Config({ clockOn, onToggleClock }: Props) {
   return (
     <>
+      <img className="bg-art" src="/bitron.png" alt="" />
+      <div className="layer">
       <div className="tour-head">
         <div className="tt">Configuración<small>preferencias de la app</small></div>
       </div>
@@ -30,6 +32,7 @@ export default function Config({ clockOn, onToggleClock }: Props) {
             <small>4–8 → 3 · 9–16 → 4 · 17–32 → 5 · 33–64 → 6 · 65–128 → 7</small>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

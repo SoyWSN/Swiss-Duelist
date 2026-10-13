@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { TournamentSummary } from '../db/repo';
 import ConfirmDialog from '../components/ConfirmDialog';
-import { IconPlus, IconTrash, IconTrophy } from '../components/icons';
+import { IconPlus, IconTrash } from '../components/icons';
 
 interface Props {
   summaries: TournamentSummary[];
@@ -25,7 +25,7 @@ export default function Home({ summaries, onCreate, onOpen, onDelete }: Props) {
 
       {summaries.length === 0 ? (
         <div className="empty">
-          <IconTrophy className="empty-icon" size={44} />
+          <img className="empty-art" src="/uuy.png" alt="" />
           <h3>No hay torneos todavía</h3>
           <p>Crea tu primer torneo y empieza a emparejar.</p>
           <button className="btn btn-pri" onClick={onCreate}>
@@ -33,7 +33,10 @@ export default function Home({ summaries, onCreate, onOpen, onDelete }: Props) {
           </button>
         </div>
       ) : (
-        <div className="recent-grid">
+        <>
+          <img className="bg-art" src="/fuwa.png" alt="" />
+          <div className="layer">
+          <div className="recent-grid">
           {summaries.map((s) => (
             <div className="card rcard" key={s.id} onClick={() => onOpen(s.id)}>
               <div className="rhead">
@@ -60,7 +63,9 @@ export default function Home({ summaries, onCreate, onOpen, onDelete }: Props) {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+          </div>
+        </>
       )}
 
       {target && (

@@ -17,6 +17,8 @@ export default function FinalView({ tournament, standings, onSave, onDiscard }: 
 
   return (
     <>
+      <img className="bg-art" src="/poplar.png" alt="" />
+      <div className="layer">
       <div className="tour-head">
         <div className="tt">
           {tournament.name}
@@ -57,6 +59,7 @@ export default function FinalView({ tournament, standings, onSave, onDiscard }: 
       )}
 
       <Standings standings={standings} final />
+      </div>
 
       {confirmDiscard && (
         <ConfirmDialog
