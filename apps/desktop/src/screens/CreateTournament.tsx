@@ -37,7 +37,7 @@ export default function CreateTournament({ onStart, onBack }: Props) {
 
   return (
     <>
-      <img className="bg-art" key={`art-${step}`} src={ART[step]} alt="" />
+      <img className={`bg-art${step === 1 ? ' bg-art-lg' : ''}`} key={`art-${step}`} src={ART[step]} alt="" />
       <div className="wiz">
       <div className="steps">
         <div className={`step ${step === 1 ? 'now' : step > 1 ? 'done' : ''}`} onClick={() => setStep(1)}>

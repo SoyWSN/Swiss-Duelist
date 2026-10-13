@@ -253,9 +253,8 @@ button { font-family: inherit; }
   position: fixed;
   right: 0;
   bottom: 0;
-  height: min(64vh, 540px);
-  width: auto;
-  max-width: 46vw;
+  max-height: 62vh;
+  max-width: 44vw;
   object-fit: contain;
   opacity: .9;
   pointer-events: none;
@@ -265,6 +264,7 @@ button { font-family: inherit; }
   -webkit-mask-image: linear-gradient(to top left, #000 58%, transparent 95%);
   mask-image: linear-gradient(to top left, #000 58%, transparent 95%);
 }
+.bg-art.bg-art-lg { max-height: 78vh; max-width: 56vw; }
 @media (max-width: 940px) { .bg-art { display: none; } }
 
 .rcard { transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease; }
