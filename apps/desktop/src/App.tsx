@@ -6,12 +6,13 @@ import { initDb } from './db/db';
 import { fireSideCannons } from './lib/confetti';
 import { IconHome, IconPlus, IconSettings, IconTrophy } from './components/icons';
 import Home from './screens/Home';
+import TournamentsList from './screens/TournamentsList';
 import CreateTournament, { type Draft } from './screens/CreateTournament';
 import TournamentView from './screens/TournamentView';
 import FinalView from './screens/FinalView';
 import Config from './screens/Config';
 
-type View = 'home' | 'create' | 'tournament' | 'final' | 'config';
+type View = 'home' | 'create' | 'tournament' | 'final' | 'config' | 'torneos';
 
 /** Empareja la ronda actual y la añade a los matches (mutación in-place del clon). */
 function pairNextRound(t: Tournament): void {
@@ -146,13 +147,13 @@ export default function App() {
   }
 
   function isActive(id: View): boolean {
-    if (id === 'tournament') return view === 'tournament' || view === 'final';
+    if (id === 'torneos') return view === 'torneos' || view === 'tournament' || view === 'final';
     return view === id;
   }
 
   const nav: { id: View; label: string; Icon: typeof IconHome; disabled?: boolean }[] = [
     { id: 'home', label: 'Inicio', Icon: IconHome },
-    { id: 'tournament', label: 'Torneo', Icon: IconTrophy, disabled: !tournament },
+    { id: 'torneos', label: 'Torneos', Icon: IconTrophy, disabled: summaries.length === 0 },
     { id: 'create', label: 'Nuevo torneo', Icon: IconPlus },
     { id: 'config', label: 'Ajustes', Icon: IconSettings },
   ];
@@ -194,6 +195,13 @@ export default function App() {
                 onCreate={() => setView('create')}
                 onOpen={openTournament}
                 onDelete={handleDelete}
+              />
+            )}
+            {view === 'torneos' && (
+              <TournamentsList
+                summaries={summaries}
+                onCreate={() => setView('create')}
+                onOpen={openTournament}
               />
             )}
             {view === 'create' && (
