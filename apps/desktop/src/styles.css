@@ -223,3 +223,36 @@ button { font-family: inherit; }
 .empty h3 { color: var(--tx-1); font-size: 16px; margin-bottom: 6px; }
 .empty p { margin-bottom: 18px; font-size: 13.5px; }
 .ic { display: inline-flex; align-items: center; justify-content: center; }
+
+/* ── fondo con grid + glow (sutil) ── */
+.main {
+  background-image:
+    radial-gradient(1000px 420px at 80% -8%, rgba(249,115,22,.07), transparent 62%),
+    radial-gradient(700px 360px at -5% 105%, rgba(249,115,22,.04), transparent 60%),
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 42px 42px, 42px 42px;
+}
+
+/* ── animaciones sutiles ── */
+.view-fade { animation: viewfade .3s ease; }
+@keyframes viewfade { from { opacity: 0; } to { opacity: 1; } }
+
+.rcard { transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease; }
+.rcard:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -18px rgba(0,0,0,.7); }
+
+.modal { animation: modalpop .2s ease; }
+@keyframes modalpop { from { opacity: 0; transform: scale(.98) translateY(6px); } to { opacity: 1; transform: none; } }
+
+.card { transition: border-color .16s ease; }
+.mesas > * { animation: cardin .32s ease backwards; }
+.mesas > *:nth-child(2) { animation-delay: .04s; }
+.mesas > *:nth-child(3) { animation-delay: .08s; }
+.mesas > *:nth-child(4) { animation-delay: .12s; }
+.mesas > *:nth-child(5) { animation-delay: .16s; }
+.mesas > *:nth-child(6) { animation-delay: .2s; }
+.mesas > *:nth-child(7) { animation-delay: .24s; }
+.mesas > *:nth-child(8) { animation-delay: .28s; }
+@keyframes cardin { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.hero, .empty, .stats > * { animation: cardin .32s ease backwards; }

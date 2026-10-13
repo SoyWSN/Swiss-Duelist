@@ -169,26 +169,28 @@ export default function App() {
         </div>
 
         <div className="content">
-          {view === 'home' && (
-            <Home summaries={summaries} onCreate={() => setView('create')} onOpen={openTournament} />
-          )}
-          {view === 'create' && (
-            <CreateTournament onStart={startTournament} onBack={() => setView('home')} />
-          )}
-          {view === 'tournament' && tournament && tournament.status !== 'finished' && (
-            <TournamentView
-              tournament={tournament}
-              standings={standings}
-              clockOn={clockOn}
-              onRecordResult={recordResult}
-              onNextRound={nextRound}
-              onDropPlayer={dropPlayer}
-            />
-          )}
-          {view === 'final' && tournament && (
-            <FinalView tournament={tournament} standings={standings} onSave={saveAndClose} />
-          )}
-          {view === 'config' && <Config clockOn={clockOn} onToggleClock={setClockOn} />}
+          <div className="view-fade" key={view}>
+            {view === 'home' && (
+              <Home summaries={summaries} onCreate={() => setView('create')} onOpen={openTournament} />
+            )}
+            {view === 'create' && (
+              <CreateTournament onStart={startTournament} onBack={() => setView('home')} />
+            )}
+            {view === 'tournament' && tournament && tournament.status !== 'finished' && (
+              <TournamentView
+                tournament={tournament}
+                standings={standings}
+                clockOn={clockOn}
+                onRecordResult={recordResult}
+                onNextRound={nextRound}
+                onDropPlayer={dropPlayer}
+              />
+            )}
+            {view === 'final' && tournament && (
+              <FinalView tournament={tournament} standings={standings} onSave={saveAndClose} />
+            )}
+            {view === 'config' && <Config clockOn={clockOn} onToggleClock={setClockOn} />}
+          </div>
         </div>
       </div>
     </div>
