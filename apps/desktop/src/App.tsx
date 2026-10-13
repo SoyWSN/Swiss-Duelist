@@ -6,7 +6,7 @@ import { initDb } from './db/db';
 import { fireSideCannons } from './lib/confetti';
 import { IconHome, IconPlus, IconSettings, IconTrophy } from './components/icons';
 import Home from './screens/Home';
-import CreateTournament from './screens/CreateTournament';
+import CreateTournament, { type Draft } from './screens/CreateTournament';
 import TournamentView from './screens/TournamentView';
 import FinalView from './screens/FinalView';
 import Config from './screens/Config';
@@ -43,6 +43,9 @@ export default function App() {
   const [tournament, setTournament] = useState<Tournament | null>(null);
   const [summaries, setSummaries] = useState<TournamentSummary[]>([]);
   const [clockOn, setClockOn] = useState(true);
+  const [confettiOn, setConfettiOn] = useState(true);
+  const [roundMinutes, setRoundMinutes] = useState(50);
+  const [draft, setDraft] = useState<Draft>({ step: 1, name: '', players: [] });
 
   useEffect(() => {
     void (async () => {
@@ -74,6 +77,7 @@ export default function App() {
     t.status = 'swiss';
     pairNextRound(t);
     setTournament(t);
+    setDraft({ step: 1, name: '', players: [] });
     setView('tournament');
     void saveTournament(t).then(refreshSummaries);
   }
@@ -92,7 +96,7 @@ export default function App() {
         t.status = 'finished';
         t.finishedAt = new Date().toISOString();
       });
-      setTimeout(() => fireSideCannons(), 150);
+      if (confettiOn) setTimeout(() => fireSideCannons(), 150);
       setView('final');
     } else {
       mutate((t) => {
@@ -193,13 +197,19 @@ export default function App() {
               />
             )}
             {view === 'create' && (
-              <CreateTournament onStart={startTournament} onBack={() => setView('home')} />
+              <CreateTournament
+                draft={draft}
+                onDraftChange={setDraft}
+                onStart={startTournament}
+                onBack={() => setView('home')}
+              />
             )}
             {view === 'tournament' && tournament && tournament.status !== 'finished' && (
               <TournamentView
                 tournament={tournament}
                 standings={standings}
                 clockOn={clockOn}
+                roundMinutes={roundMinutes}
                 onRecordResult={recordResult}
                 onNextRound={nextRound}
                 onDropPlayer={dropPlayer}
@@ -208,7 +218,16 @@ export default function App() {
             {view === 'final' && tournament && (
               <FinalView tournament={tournament} standings={standings} onSave={saveAndClose} onDiscard={discardAndClose} />
             )}
-            {view === 'config' && <Config clockOn={clockOn} onToggleClock={setClockOn} />}
+            {view === 'config' && (
+              <Config
+                clockOn={clockOn}
+                onToggleClock={setClockOn}
+                confettiOn={confettiOn}
+                onToggleConfetti={setConfettiOn}
+                roundMinutes={roundMinutes}
+                onRoundMinutesChange={setRoundMinutes}
+              />
+            )}
           </div>
         </div>
       </div>

@@ -227,6 +227,11 @@ button { font-family: inherit; }
 .empty .empty-icon { width: 44px; height: 44px; margin: 0 auto 14px; color: var(--o-400); }
 .empty-art { display: block; width: min(240px, 60%); max-height: 240px; object-fit: contain; margin: 0 auto 20px; }
 .error { display: flex; align-items: center; gap: 6px; color: #ff7a96; background: rgba(244,63,94,.09); border: 1px solid rgba(244,63,94,.35); border-radius: 8px; padding: 7px 11px; font-size: 12px; font-weight: 600; margin-top: 8px; }
+.ctime { font-variant-numeric: tabular-nums; }
+.ctoggle { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; border: none; background: rgba(255,255,255,.14); color: inherit; cursor: pointer; padding: 0; }
+.ctoggle:hover { background: rgba(255,255,255,.26); }
+.num-input { background: var(--surface-2); border: 1px solid var(--line-2); border-radius: 9px; color: var(--tx-1); padding: 6px 10px; width: 72px; text-align: center; font: 600 13px inherit; }
+.num-input:focus { outline: none; border-color: var(--o-400); }
 .empty h3 { color: var(--tx-1); font-size: 16px; margin-bottom: 6px; }
 .empty p { margin-bottom: 18px; font-size: 13.5px; }
 .ic { display: inline-flex; align-items: center; justify-content: center; }
@@ -248,7 +253,7 @@ button { font-family: inherit; }
 /* ── asistente: arte decorativo (inferior derecho) ── */
 .wiz { position: relative; z-index: 1; }
 .wiz-main { min-width: 0; }
-.step-fade { min-width: 0; animation: viewfade .25s ease; }
+.step-fade { min-width: 0; max-width: min(100%, 600px); animation: viewfade .25s ease; }
 .layer { position: relative; z-index: 1; }
 .bg-art {
   position: fixed;

@@ -1,29 +1,58 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Match, MatchOutcome, Player, Standing, Tournament } from '@swiss-duelist/engine';
 import Standings from '../components/Standings';
-import { IconAlert, IconClock, IconX } from '../components/icons';
+import { IconAlert, IconClock, IconPause, IconPlay, IconX } from '../components/icons';
 
 interface Props {
   tournament: Tournament;
   standings: Standing[];
   clockOn: boolean;
+  roundMinutes: number;
   onRecordResult: (matchId: string, outcome: MatchOutcome) => void;
   onNextRound: () => void;
   onDropPlayer: (playerId: string) => void;
 }
 
-function RoundClock({ round, visible }: { round: number; visible: boolean }) {
-  const [s, setS] = useState(50 * 60);
-  useEffect(() => setS(50 * 60), [round]);
+function RoundClock({ round, minutes, visible }: { round: number; minutes: number; visible: boolean }) {
+  const [remaining, setRemaining] = useState(minutes * 60);
+  const [running, setRunning] = useState(false);
+
   useEffect(() => {
-    if (!visible) return;
-    const id = setInterval(() => setS((x) => (x > 0 ? x - 1 : 0)), 1000);
+    setRemaining(minutes * 60);
+    setRunning(false);
+  }, [round, minutes]);
+
+  useEffect(() => {
+    if (!running) return;
+    const id = setInterval(() => {
+      setRemaining((x) => {
+        if (x <= 1) {
+          setRunning(false);
+          return 0;
+        }
+        return x - 1;
+      });
+    }, 1000);
     return () => clearInterval(id);
-  }, [visible]);
+  }, [running]);
+
   if (!visible) return null;
-  const mm = String(Math.floor(s / 60)).padStart(2, '0');
-  const ss = String(s % 60).padStart(2, '0');
-  return <span className="chip chip-o chip-live"><IconClock size={14} /> {mm}:{ss}</span>;
+  const mm = String(Math.floor(remaining / 60)).padStart(2, '0');
+  const ss = String(remaining % 60).padStart(2, '0');
+
+  return (
+    <span className={`chip chip-o ${running ? 'chip-live' : ''}`}>
+      <IconClock size={14} />
+      <span className="ctime">{mm}:{ss}</span>
+      <button
+        className="ctoggle"
+        onClick={() => setRunning((r) => !r)}
+        title={running ? 'Pausar reloj' : 'Iniciar reloj'}
+      >
+        {running ? <IconPause size={11} /> : <IconPlay size={11} />}
+      </button>
+    </span>
+  );
 }
 
 function HoldButton({ onConfirm, label }: { onConfirm: () => void; label: string }) {
@@ -175,7 +204,7 @@ function NextRoundModal({ matches, nameOf, isLastRound, onCancel, onConfirm }: {
   );
 }
 
-export default function TournamentView({ tournament, standings, clockOn, onRecordResult, onNextRound, onDropPlayer }: Props) {
+export default function TournamentView({ tournament, standings, clockOn, roundMinutes, onRecordResult, onNextRound, onDropPlayer }: Props) {
   const [tab, setTab] = useState<'ronda' | 'clasi'>('ronda');
   const [editingId, setEditingId] = useState<string | null>(null);
   const [confirming, setConfirming] = useState(false);
@@ -203,7 +232,7 @@ export default function TournamentView({ tournament, standings, clockOn, onRecor
           {tournament.name}
           <small>ronda {tournament.currentRound} de {tournament.totalRounds} · creado {new Date(tournament.createdAt).toLocaleDateString()}</small>
         </div>
-        <RoundClock round={tournament.currentRound} visible={clockOn} />
+        <RoundClock round={tournament.currentRound} minutes={roundMinutes} visible={clockOn} />
         <span className="chip chip-ok">{reported}/{currentMatches.length} reportadas</span>
         <div className="sp2">
           <button className="btn btn-pri" onClick={() => setConfirming(true)} disabled={!roundComplete}>
