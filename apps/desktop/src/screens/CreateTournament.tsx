@@ -36,7 +36,9 @@ export default function CreateTournament({ onStart, onBack }: Props) {
   }
 
   return (
-    <div className="wiz">
+    <>
+      <img className="wiz-art" key={`art-${step}`} src={ART[step]} alt="" />
+      <div className="wiz">
       <div className="steps">
         <div className={`step ${step === 1 ? 'now' : step > 1 ? 'done' : ''}`} onClick={() => setStep(1)}>
           <span className="sn">{step > 1 ? '✓' : '1'}</span>
@@ -53,7 +55,6 @@ export default function CreateTournament({ onStart, onBack }: Props) {
       </div>
 
       <div className="wiz-main">
-        <img className="wiz-art" key={`art-${step}`} src={ART[step]} alt="" />
         <div className="step-fade" key={step}>
         {step === 1 && (
           <>
@@ -150,5 +151,6 @@ export default function CreateTournament({ onStart, onBack }: Props) {
         </div>
       </div>
     </div>
+    </>
   );
 }

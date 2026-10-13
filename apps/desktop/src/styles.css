@@ -243,21 +243,25 @@ button { font-family: inherit; }
 .view-fade { animation: viewfade .3s ease; }
 @keyframes viewfade { from { opacity: 0; } to { opacity: 1; } }
 
-/* ── asistente: contenido + arte por paso ── */
-.wiz-main { display: flex; gap: 26px; align-items: flex-start; min-width: 0; }
-.step-fade { flex: 1 1 auto; min-width: 0; max-width: min(100%, 640px); animation: viewfade .25s ease; }
+/* ── asistente: arte decorativo (inferior derecho) ── */
+.wiz { position: relative; z-index: 1; }
+.wiz-main { min-width: 0; }
+.step-fade { min-width: 0; animation: viewfade .25s ease; }
 .wiz-art {
-  flex: none;
-  height: min(56vh, 420px);
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  height: min(64vh, 540px);
   width: auto;
-  max-width: 32vw;
+  max-width: 46vw;
   object-fit: contain;
-  opacity: .95;
+  opacity: .9;
   pointer-events: none;
   user-select: none;
+  z-index: 0;
   animation: viewfade .45s ease;
-  -webkit-mask-image: linear-gradient(155deg, #000 60%, transparent 96%);
-  mask-image: linear-gradient(155deg, #000 60%, transparent 96%);
+  -webkit-mask-image: linear-gradient(to top left, #000 58%, transparent 95%);
+  mask-image: linear-gradient(to top left, #000 58%, transparent 95%);
 }
 @media (max-width: 940px) { .wiz-art { display: none; } }
 
