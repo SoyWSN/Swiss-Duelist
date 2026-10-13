@@ -1,0 +1,1076 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swiss Duelist v0.2 — Maqueta · Torneos suizos Yu-Gi-Oh!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --o-100:#FFE6D5; --o-200:#FECBAA; --o-300:#FDBA74; --o-400:#FB8F3C; --o-500:#F97316;
+  --o-600:#EA580C; --o-700:#C2410C; --o-900:#7C2D12;
+  --bg-board:#05070C; --bg-app:#0C0F16; --surface:#12161F; --surface-2:#171C28; --surface-3:#1D2433;
+  --line:#232B3E; --line-2:#2E3850;
+  --tx-1:#F2F5FA; --tx-2:#A6AFC2; --tx-3:#6E7A93;
+  --ok:#34D399; --warn:#FBBF24; --bad:#F43F5E; --info:#38BDF8;
+  --grad:linear-gradient(135deg,#FB8F3C,#EA580C);
+  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg-board);color:var(--tx-1);font:15px/1.55 Inter,'Segoe UI',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(1100px 480px at 75% -8%,rgba(249,115,22,.13),transparent 62%),
+             radial-gradient(800px 420px at -5% 108%,rgba(249,115,22,.05),transparent 60%)}
+.wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:34px 26px 70px}
+
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:1.6px;color:var(--o-300);text-transform:uppercase;margin-bottom:10px}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--grad);border-radius:2px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.5px}
+h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--tx-2);max-width:660px;margin-top:8px;font-size:14.5px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.mchip{font-size:11.5px;font-weight:600;padding:4px 11px;border-radius:999px;border:1px solid var(--line-2);background:rgba(18,22,31,.7);color:var(--tx-2)}
+.mchip b{color:var(--o-300);font-weight:700}
+
+.btabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;padding:12px 0;margin-top:26px;background:rgba(5,7,12,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.btab{font:600 13px Inter;border:1px solid var(--line-2);background:var(--surface);color:var(--tx-2);padding:8px 15px;border-radius:10px;cursor:pointer;transition:.15s}
+.btab:hover{color:var(--tx-1);border-color:var(--o-400)}
+.btab.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 6px 20px -8px rgba(234,88,12,.6)}
+.bsec{display:none;margin-top:30px}
+.bsec.on{display:block}
+
+.kick{font-size:11px;font-weight:800;letter-spacing:2px;color:var(--o-400);text-transform:uppercase}
+h2{font-size:21px;font-weight:750;letter-spacing:-.3px;margin:6px 0 4px}
+.lead{color:var(--tx-2);font-size:14px;max-width:760px}
+
+/* ── paleta ── */
+.swgroup{margin-top:26px}
+.swgroup>b{display:block;font-size:12.5px;font-weight:700;letter-spacing:.4px;margin-bottom:3px}
+.swgroup>i{display:block;font-style:normal;font-size:12.5px;color:var(--tx-3);margin-bottom:12px}
+.sws{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px}
+.sw{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.sw-c{height:58px}
+.sw-m{padding:9px 11px 10px}
+.sw-m b{font-size:12px;font-weight:700;display:block}
+.sw-m .hex{font-family:var(--mono);font-size:11px;color:var(--tx-2);display:block;margin:1px 0 4px}
+.sw-m em{font-style:normal;font-size:10.8px;color:var(--tx-3);line-height:1.35;display:block}
+.gradbar{height:44px;border-radius:12px;background:var(--grad);margin-top:26px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+.gradbar span{position:absolute;inset:0;display:flex;align-items:center;padding:0 16px;font-size:12.5px;font-weight:700;color:rgba(255,255,255,.92);letter-spacing:.3px}
+.demo{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.demo .lbl{width:100%;font-size:12.5px;color:var(--tx-3);font-weight:600}
+.typo{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}
+.ty{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.ty small{display:block;font-size:10.5px;font-weight:700;letter-spacing:1px;color:var(--tx-3);text-transform:uppercase;margin-bottom:8px}
+.ty-disp{font-size:25px;font-weight:800;letter-spacing:-.5px}
+.ty-h{font-size:16px;font-weight:700}
+.ty-lab{font-size:11.5px;font-weight:650;letter-spacing:.9px;color:var(--o-300);text-transform:uppercase}
+.ty-b{font-size:14.5px;color:var(--tx-2)}
+.ty-num{font-variant-numeric:tabular-nums;font-size:20px;font-weight:700}
+.ty-num i{font-style:normal;color:var(--tx-3);font-weight:500;font-size:14px}
+.ty-mono{font-family:var(--mono);font-size:14px;color:#FFB27A}
+
+/* ── iconos / botones / chips ── */
+.ic{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.lg{width:19px;height:19px}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;font:600 13px Inter;cursor:pointer;border:1px solid transparent;transition:.15s;color:var(--tx-1)}
+.btn-pri{background:var(--grad);color:#fff;box-shadow:0 8px 22px -10px rgba(234,88,12,.65)}
+.btn-pri:hover{filter:brightness(1.08)}
+.btn-sec{background:var(--surface-2);border-color:var(--line-2)}
+.btn-sec:hover{border-color:var(--o-400)}
+.btn-ghost{background:transparent;color:var(--tx-2)}
+.btn-ghost:hover{color:var(--tx-1)}
+.btn-dl{background:rgba(244,63,94,.1);border-color:rgba(244,63,94,.45);color:#FF7A96}
+.btn:disabled{opacity:.42;cursor:not-allowed;box-shadow:none}
+.btn.big{padding:13px 22px;font-size:14.5px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.2px;white-space:nowrap}
+.chip-ok{background:rgba(52,211,153,.13);color:#52E3B0}
+.chip-o{background:rgba(249,115,22,.15);color:#FFB27A}
+.chip-bad{background:rgba(244,63,94,.13);color:#FF7A96}
+.chip-info{background:rgba(56,189,248,.13);color:#7DD3FC}
+.chip-warn{background:rgba(251,191,36,.12);color:#FCD34D}
+.chip-mut{background:var(--surface-3);color:var(--tx-3)}
+.chip-live{animation:pulse 2.2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(249,115,22,.5)}55%{box-shadow:0 0 0 5px rgba(249,115,22,0)}}
+.tag{font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:6px;background:var(--surface-3);color:var(--tx-3);letter-spacing:.8px;text-transform:uppercase}
+
+/* ── módulos ── */
+.layers{display:grid;gap:12px;margin-top:24px}
+.layer{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:18px 20px}
+.layer.core{border-color:rgba(249,115,22,.4);background:linear-gradient(180deg,rgba(249,115,22,.06),transparent 55%),var(--surface)}
+.layer-h{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.layer-h b{font-size:15px;font-weight:750}
+.layer>p{color:var(--tx-3);font-size:12.5px;margin-bottom:12px}
+.mods{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:8px}
+.mod{display:flex;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.mod .ic{margin-top:2px;color:var(--o-400)}
+.mod b{display:block;font-size:12.8px;font-weight:700}
+.mod span{display:block;font-size:11.6px;color:var(--tx-3);line-height:1.4}
+.smap{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fill,minmax(262px,1fr));gap:10px}
+.sm{display:flex;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.sm .ic{color:var(--o-400);margin-top:2px}
+.sm b{display:block;font-size:13.5px;font-weight:700}
+.sm span{display:block;font-size:11.8px;color:var(--tx-3);line-height:1.45;margin-top:2px}
+
+/* ── ventana de app ── */
+.scrnav{display:flex;flex-wrap:wrap;gap:7px;margin:20px 0 16px}
+.spill{font:600 12.5px Inter;padding:7px 13px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);color:var(--tx-2);cursor:pointer;transition:.15s}
+.spill:hover{color:var(--tx-1)}
+.spill.on{background:rgba(249,115,22,.16);border-color:var(--o-500);color:#FFB27A}
+.appwin{border:1px solid var(--line-2);border-radius:18px;overflow:hidden;background:var(--bg-app);box-shadow:0 40px 90px -25px rgba(0,0,0,.75),0 0 0 1px rgba(249,115,22,.07)}
+.tbar{display:flex;align-items:center;gap:9px;padding:10px 15px;background:#0A0D14;border-bottom:1px solid var(--line)}
+.dot{width:11px;height:11px;border-radius:50%;background:#3A4560}
+.tbar span{margin:0 auto;transform:translateX(-24px);font-size:11.5px;color:var(--tx-3);font-weight:600;letter-spacing:.3px}
+.app{display:grid;grid-template-columns:218px 1fr;min-height:660px}
+.side{background:#0A0D14;border-right:1px solid var(--line);padding:16px 12px 14px;display:flex;flex-direction:column}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 8px 16px}
+.lmark{width:32px;height:32px;border-radius:9px;background:var(--grad);display:grid;place-items:center;color:#fff;box-shadow:0 6px 16px -6px rgba(234,88,12,.7)}
+.logo b{font-size:15px;font-weight:800;letter-spacing:-.2px}
+.logo small{display:block;font-size:9.5px;color:var(--tx-3);font-weight:600;letter-spacing:1.2px;text-transform:uppercase}
+.anav{display:flex;flex-direction:column;gap:3px}
+.anav .anl{font-size:10px;font-weight:800;letter-spacing:1.4px;color:var(--tx-3);text-transform:uppercase;padding:12px 10px 5px}
+.ai{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:10px;color:var(--tx-2);font-size:13.5px;font-weight:600;cursor:pointer;border:none;background:transparent;text-align:left;transition:.14s;position:relative;font-family:inherit}
+.ai:hover{color:var(--tx-1);background:rgba(255,255,255,.03)}
+.ai.on{color:#FFB27A;background:linear-gradient(90deg,rgba(249,115,22,.17),rgba(249,115,22,.04))}
+.ai.on::before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:2.5px;border-radius:3px;background:var(--grad)}
+.main{display:flex;flex-direction:column;min-width:0}
+.top{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line);background:rgba(12,15,22,.7)}
+.top .tt{font-size:14px;font-weight:700}
+.top .tt small{display:block;font-size:10.5px;color:var(--tx-3);font-weight:600;letter-spacing:.6px;text-transform:uppercase}
+.top .sp{margin-left:auto}
+.avat{width:32px;height:32px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#fff;font-size:11px;font-weight:800}
+.cont{padding:18px;flex:1;position:relative;min-width:0}
+.screen{display:none}
+.screen.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;min-width:0}
+.card>b{display:block;font-size:14px;font-weight:750;margin-bottom:10px}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-size:10.5px;font-weight:700;letter-spacing:.9px;color:var(--tx-3);text-transform:uppercase;text-align:left;padding:7px 10px;border-bottom:1px solid var(--line-2);white-space:nowrap}
+.tbl td{padding:10px;border-bottom:1px solid rgba(35,43,62,.55);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tbody tr:hover td{background:rgba(255,255,255,.022)}
+.num{text-align:right;font-weight:600}
+.who{display:flex;align-items:center;gap:10px}
+.cav{width:30px;height:30px;border-radius:50%;background:rgba(249,115,22,.16);color:#FFB27A;display:grid;place-items:center;font-size:11px;font-weight:800;flex:none}
+.cav.alt{background:var(--surface-3);color:var(--tx-2)}
+.who b{font-size:13.5px;font-weight:700;display:block}
+.who small{font-family:var(--mono);font-size:10px;color:var(--tx-3);display:block}
+.rec{font-variant-numeric:tabular-nums;font-weight:650}
+.mut td{opacity:.5}
+.link{margin-top:10px;font-size:12.5px;color:var(--o-300);font-weight:700;cursor:pointer;background:none;border:none;padding:0;font-family:inherit}
+.link:hover{text-decoration:underline}
+
+/* rank medals */
+.rank{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:800}
+.rank.r1{background:var(--grad);color:#fff}
+.rank.r2{background:#3A4358;color:#E2E8F0}
+.rank.r3{background:rgba(194,120,60,.3);color:#F3C79B}
+.rank.rn{background:var(--surface-3);color:var(--tx-3)}
+.r1 td{background:rgba(249,115,22,.12)}
+.r1 td:first-child{box-shadow:inset 3px 0 0 var(--o-500)}
+.r2 td{background:rgba(160,170,190,.07)}
+.r2 td:first-child{box-shadow:inset 3px 0 0 #94A3B8}
+.r3 td{background:rgba(194,120,60,.09)}
+.r3 td:first-child{box-shadow:inset 3px 0 0 #C2783C}
+.row-dl td{background:rgba(244,63,94,.05)}
+.row-dl td:first-child{box-shadow:inset 3px 0 0 var(--bad)}
+.dots td{text-align:center;color:var(--tx-3);letter-spacing:3px;padding:4px 0}
+
+/* ── home ── */
+.hero{background:linear-gradient(135deg,rgba(249,115,22,.16),rgba(18,22,31,.2) 55%),var(--surface);border:1px solid var(--line-2);border-radius:18px;padding:34px 32px;display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+.hero h3{font-size:26px;font-weight:800;letter-spacing:-.5px}
+.hero h3 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--tx-2);max-width:520px;font-size:14px}
+.recents{margin-top:22px}
+.recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:12px;margin-top:12px}
+.rcard{display:flex;flex-direction:column}
+.rhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px}
+.rhead b{font-size:15px;font-weight:750}
+.rhead small{display:block;font-size:11px;color:var(--tx-3);margin-top:2px}
+.rcard .tbl td{padding:6px 8px;font-size:12.5px}
+.rcard .tbl th{padding:6px 8px}
+
+/* ── wizard ── */
+.wiz{display:grid;grid-template-columns:205px 1fr;gap:14px;align-items:start}
+.steps{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.step{display:flex;gap:11px;align-items:center;padding:10px 8px;border-radius:10px;color:var(--tx-3);cursor:pointer}
+.step.done{color:var(--tx-2)}
+.step.now{background:rgba(249,115,22,.13);color:#FFB27A}
+.sn{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;background:var(--surface-3);color:var(--tx-3);flex:none;border:1px solid var(--line-2)}
+.step.done .sn{background:rgba(52,211,153,.15);color:#52E3B0;border-color:rgba(52,211,153,.4)}
+.step.now .sn{background:var(--grad);color:#fff;border-color:transparent}
+.step b{font-size:13px;font-weight:700;display:block}
+.step small{display:block;font-size:10.5px;color:var(--tx-3)}
+.wbody{display:none}
+.wbody.on{display:block;animation:fade .22s ease}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:10.5px;font-weight:800;letter-spacing:1.1px;color:var(--tx-3);text-transform:uppercase;margin-bottom:7px}
+.input{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line-2);border-radius:11px;padding:11px 14px;color:var(--tx-1);font:500 14px Inter}
+.input input{background:none;border:none;outline:none;color:var(--tx-1);font:500 14px Inter;width:100%}
+.input input::placeholder{color:var(--tx-3)}
+.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:11px;overflow:hidden}
+.seg button{padding:9px 16px;background:var(--surface-2);border:none;color:var(--tx-2);font:600 13px Inter;cursor:pointer}
+.seg button.on{background:var(--grad);color:#fff}
+.optrow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 15px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+.optrow b{font-size:13.5px;font-weight:700;display:block}
+.optrow small{display:block;font-size:11.5px;color:var(--tx-3);margin-top:1px}
+.sw2{position:relative;width:42px;height:23px;border-radius:99px;background:var(--surface-3);border:1px solid var(--line-2);cursor:pointer;transition:.18s;flex:none}
+.sw2::after{content:"";position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;background:var(--tx-3);transition:.18s}
+.sw2.on{background:var(--grad);border-color:transparent}
+.sw2.on::after{left:22px;background:#fff}
+.addrow{display:flex;gap:9px;margin-bottom:14px}
+.dlist{list-style:none;display:flex;flex-direction:column;gap:6px;max-height:250px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:8px;background:var(--surface)}
+.dl-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 11px;background:var(--surface-2);border-radius:9px;font-size:13.5px;font-weight:600}
+.dl-row .dx{background:none;border:none;color:var(--tx-3);cursor:pointer;font-size:15px;line-height:1;padding:2px 6px;border-radius:6px}
+.dl-row .dx:hover{color:var(--bad);background:rgba(244,63,94,.1)}
+.wfoot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px}
+.wsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.wsum .card small{display:block;font-size:10.5px;font-weight:800;letter-spacing:1.1px;color:var(--tx-3);text-transform:uppercase;margin-bottom:8px}
+.wsum .row{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;padding:4px 0;border-bottom:1px dashed var(--line)}
+.wsum .row:last-child{border-bottom:none}
+.wsum .row span{color:var(--tx-3)}
+.wsum .row b{font-weight:650;text-align:right}
+
+/* ── torneo: sub-tabs, mesas, modal ── */
+.tour-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.tour-head .tt{font-size:16px;font-weight:800}
+.tour-head .tt small{display:block;font-size:10.5px;color:var(--tx-3);font-weight:600;letter-spacing:.6px;text-transform:uppercase}
+.tour-head .sp2{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.subt{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:14px;width:max-content}
+.subt button{padding:7px 16px;border-radius:9px;border:none;background:transparent;color:var(--tx-2);font:600 13px Inter;cursor:pointer}
+.subt button.on{background:var(--surface-3);color:#FFB27A}
+.view{display:none}
+.view.on{display:block;animation:fade .22s ease}
+.timerbox{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:14px}
+.timerbox .tv{font-family:var(--mono);font-size:22px;font-weight:700;color:#FFB27A}
+.timerbox .tb{flex:1;height:6px;border-radius:99px;background:var(--surface-3);overflow:hidden}
+.timerbox .tb i{display:block;height:100%;background:var(--grad);border-radius:99px;transition:width 1s linear}
+.timerbox small{font-size:11px;color:var(--tx-3);font-variant-numeric:tabular-nums}
+.mesas{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:11px}
+.mesa{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px 16px 14px}
+.mesa.done{border-color:rgba(52,211,153,.35)}
+.mesa.bye{border-style:dashed;border-color:rgba(56,189,248,.4)}
+.mtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.mn{font-size:11px;font-weight:800;letter-spacing:1.2px;color:var(--tx-3)}
+.mvs{display:flex;flex-direction:column;gap:6px}
+.mp{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mp b{font-size:13.5px;font-weight:700}
+.mp small{font-size:11px;color:var(--tx-3);font-variant-numeric:tabular-nums}
+.vsline{display:flex;align-items:center;gap:8px;color:var(--tx-3);font-size:10px;font-weight:800;letter-spacing:1px}
+.vsline::before,.vsline::after{content:"";flex:1;height:1px;background:var(--line)}
+.mfoot{display:flex;justify-content:space-between;align-items:center;margin-top:11px;gap:8px}
+.mnote{font-size:11px;color:var(--tx-3)}
+.collapse{display:flex;align-items:center;gap:10px;color:var(--tx-3);font-size:12.5px;font-weight:600;background:var(--surface);border:1px dashed var(--line-2);border-radius:14px;padding:14px 16px}
+
+/* modal overlay */
+.mback{position:absolute;inset:0;background:rgba(4,6,10,.68);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:30;padding:16px}
+.mback.show{display:flex}
+.modal{width:min(600px,100%);max-height:92%;overflow:auto;background:var(--surface);border:1px solid var(--line-2);border-radius:16px;box-shadow:0 40px 100px -20px #000;padding:20px 22px;animation:pop .22s ease}
+@keyframes pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+.mhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.mhead .k{font-size:10.5px;font-weight:800;letter-spacing:1.4px;color:var(--o-400);text-transform:uppercase}
+.mhead b{display:block;font-size:17px;font-weight:800;letter-spacing:-.2px}
+.xbtn{background:var(--surface-2);border:1px solid var(--line-2);border-radius:9px;color:var(--tx-2);width:30px;height:30px;display:grid;place-items:center;cursor:pointer}
+.xbtn:hover{color:var(--tx-1);border-color:var(--o-400)}
+.vsbox{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin-bottom:16px}
+.vp{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:11px 13px;text-align:center}
+.vp b{font-size:14.5px;font-weight:750;display:block}
+.vp small{font-size:11px;color:var(--tx-3);font-variant-numeric:tabular-nums}
+.vsm{align-self:center;font-size:11px;font-weight:800;color:var(--tx-3);letter-spacing:1px}
+.mlab{font-size:10.5px;font-weight:800;letter-spacing:1.2px;color:var(--tx-3);text-transform:uppercase;margin-bottom:8px}
+.gps{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.gp{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:9px;font-size:12.5px;font-weight:650}
+.gp small{color:var(--tx-3);font-weight:700;font-size:10px}
+.gp-p1{background:rgba(249,115,22,.16);color:#FFB27A}
+.gp-p2{background:rgba(56,189,248,.13);color:#7DD3FC}
+.gp-draw{background:rgba(251,191,36,.12);color:#FCD34D}
+.gp-add{border:1.5px dashed var(--line-2);color:var(--tx-3);background:transparent;cursor:pointer;font:650 12.5px Inter}
+.gnote{font-size:11.5px;color:var(--tx-3);margin-bottom:16px}
+.outs{display:flex;gap:9px;margin-bottom:16px}
+.out{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:15px 8px;border-radius:12px;border:1px solid var(--line-2);background:var(--surface-2);cursor:pointer;transition:.15s;font-family:inherit}
+.out b{font-size:13.5px;font-weight:750;color:var(--tx-1)}
+.out:hover{border-color:var(--o-400)}
+.out.sel{background:rgba(249,115,22,.15);border-color:var(--o-500);box-shadow:0 0 0 1px var(--o-500) inset}
+.out.sel b{color:#FFB27A}
+.out.dl:hover{border-color:rgba(244,63,94,.55)}
+.out.dl b{color:#FF7A96}
+.out.dl.sel{background:rgba(244,63,94,.13);border-color:rgba(244,63,94,.65);box-shadow:0 0 0 1px rgba(244,63,94,.65) inset}
+.mfoot2{display:flex;justify-content:flex-end;gap:9px}
+
+/* confirmación de ronda */
+.rlist{max-height:250px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-bottom:14px}
+.rrow{display:flex;align-items:center;gap:10px;padding:9px 13px;border-bottom:1px solid var(--line);font-size:13px}
+.rrow:last-child{border:none}
+.rn{font-family:var(--mono);font-size:11px;color:var(--tx-3);min-width:34px}
+.rr{margin-left:auto;color:var(--tx-3);font-size:12px}
+.rrow.dl{background:rgba(244,63,94,.06)}
+.rrow.bye{background:rgba(56,189,248,.05)}
+.hold{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;height:48px;border-radius:12px;background:var(--grad);color:#fff;font-weight:700;cursor:pointer;user-select:none;margin-bottom:10px;font-family:inherit}
+.hold .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(0,0,0,.22)}
+.hold span{position:relative;z-index:1;font-size:13.5px}
+.hold.holding .fill{animation:fill 1s linear forwards}
+@keyframes fill{to{width:100%}}
+
+/* ── cierre ── */
+.podium{display:grid;grid-template-columns:1fr 1.18fr 1fr;gap:10px;align-items:end;margin-bottom:16px}
+.pod{border-radius:14px;padding:16px 14px;text-align:center}
+.pod small{display:block;font-size:10.5px;font-weight:800;letter-spacing:1.2px;color:var(--tx-3);text-transform:uppercase}
+.pod b{display:block;font-size:16px;font-weight:800;margin:4px 0 2px}
+.pod span{font-size:12px;color:var(--tx-3);font-variant-numeric:tabular-nums}
+.pod1{background:linear-gradient(180deg,rgba(249,115,22,.3),rgba(249,115,22,.07));border:1px solid var(--o-500);padding-top:30px}
+.pod1 b{color:#FFB27A}
+.pod2{background:linear-gradient(180deg,rgba(160,170,190,.16),transparent);border:1px solid var(--line-2)}
+.pod3{background:linear-gradient(180deg,rgba(194,120,60,.18),transparent);border:1px solid rgba(194,120,60,.45)}
+.pod3 b{color:#F3C79B}
+
+/* config */
+.cfg-list{display:flex;flex-direction:column;gap:10px;max-width:620px}
+.cfg-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:13px}
+.cfg-row b{font-size:13.5px;font-weight:700;display:block}
+.cfg-row small{display:block;font-size:11.5px;color:var(--tx-3);margin-top:1px}
+.cfg-note{margin-top:12px;font-size:12px;color:var(--tx-3)}
+
+.legend{display:flex;gap:10px;align-items:flex-start;margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 15px}
+.legend .ic{color:var(--o-400);margin-top:2px}
+.legend p{font-size:12px;color:var(--tx-2);line-height:1.55}
+.legend p b{color:var(--tx-1)}
+.note{margin-top:22px;display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px dashed var(--line-2);border-radius:12px;padding:13px 16px;color:var(--tx-3);font-size:12.5px;line-height:1.55}
+.note .ic{color:var(--o-400);margin-top:1px}
+.no-clock .clock{display:none !important}
+
+#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--surface-3);border:1px solid var(--line-2);color:var(--tx-1);border-radius:12px;padding:11px 18px;font-size:13px;font-weight:600;z-index:99;transition:.25s;pointer-events:none;box-shadow:0 18px 40px -12px #000}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:860px){.app{grid-template-columns:1fr}.side{display:none}.wiz{grid-template-columns:1fr}.podium{grid-template-columns:1fr 1fr 1fr}}
+</style>
+</head>
+<body>
+
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 5H4v2a3 3 0 0 0 3 3"/><path d="M17 5h3v2a3 3 0 0 1-3 3"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24"><path d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86L7.86 2z"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+  <symbol id="i-userx" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="18" y1="8" x2="23" y2="13"/><line x1="23" y1="8" x2="18" y2="13"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></symbol>
+</svg>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Esqueleto visual · v0.2</div>
+    <h1><em>Swiss Duelist</em> — gestor de torneos suizos</h1>
+    <p class="sub">Tu flujo, hecho maqueta: <b>Inicio → Crear torneo → Jugar rondas → Podio → Guardar → Inicio</b>.
+    Navega las pestañas y las pantallas; el reloj corre de verdad, el asistente agrega duelistas y el botón de
+    siguiente ronda se mantiene presionado para confirmar.</p>
+    <div class="meta">
+      <span class="mchip">Shell <b>Tauri 2</b></span>
+      <span class="mchip">UI <b>React + TS</b></span>
+      <span class="mchip">BD <b>SQLite</b></span>
+      <span class="mchip">Reglas <b>KDE v2.5</b></span>
+      <span class="mchip">Tema <b>carbón + naranja</b></span>
+    </div>
+  </header>
+
+  <nav class="btabs">
+    <button class="btab" data-tab="b-paleta">01 · Paleta</button>
+    <button class="btab" data-tab="b-mod">02 · Módulos</button>
+    <button class="btab on" data-tab="b-ui">03 · Pantallas</button>
+  </nav>
+
+  <!-- ══════════ 01 PALETA ══════════ -->
+  <section class="bsec" id="b-paleta">
+    <div class="kick">01 · Identidad</div>
+    <h2>Paleta — naranja competitivo sobre carbón</h2>
+    <p class="lead">El naranja es la voz de la marca: <b>victoria, determinación, competencia, rivalidad</b>.
+    Se reserva para lo que impulsa la acción. El fondo carbón azulado da reposo; el verde y el azul son solo
+    señales del sistema y nunca compiten con el naranja.</p>
+
+    <div class="swgroup">
+      <b>Naranja — identidad y acción</b>
+      <i>Escala cálida. El 500 es el primario; nada por debajo del 600 para texto sobre claro.</i>
+      <div class="sws">
+        <div class="sw"><div class="sw-c" style="background:#FFE6D5"></div><div class="sw-m"><b>O-100</b><span class="hex">#FFE6D5</span><em>Resalte en modo claro (secundario)</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#FDBA74"></div><div class="sw-m"><b>O-300</b><span class="hex">#FDBA74</span><em>Íconos activos · texto acento suave</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#FB8F3C"></div><div class="sw-m"><b>O-400</b><span class="hex">#FB8F3C</span><em>Hover · foco · chips de estado</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#F97316"></div><div class="sw-m"><b>O-500 · PRIMARIO</b><span class="hex">#F97316</span><em>CTA · selección · nav activa</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#EA580C"></div><div class="sw-m"><b>O-600</b><span class="hex">#EA580C</span><em>Hover del primario · fin del gradiente</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#C2410C"></div><div class="sw-m"><b>O-700</b><span class="hex">#C2410C</span><em>Presionado · acento intenso</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#7C2D12"></div><div class="sw-m"><b>O-900</b><span class="hex">#7C2D12</span><em>Bordes de acento · sombras cálidas</em></div></div>
+      </div>
+    </div>
+
+    <div class="swgroup">
+      <b>Carbón — fondos, líneas y texto</b>
+      <i>Azulado, no gris plano: se ve moderno y hace sangrar el naranja.</i>
+      <div class="sws">
+        <div class="sw"><div class="sw-c" style="background:#0C0F16"></div><div class="sw-m"><b>Fondo app</b><span class="hex">#0C0F16</span><em>Lienzo principal</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#12161F"></div><div class="sw-m"><b>Superficie</b><span class="hex">#12161F</span><em>Tarjetas y tablas</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#1D2433"></div><div class="sw-m"><b>Elevada</b><span class="hex">#1D2433</span><em>Inputs · hover · chips neutros</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#2E3850"></div><div class="sw-m"><b>Borde</b><span class="hex">#2E3850</span><em>Contornos y separadores</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#F2F5FA"></div><div class="sw-m"><b>Texto principal</b><span class="hex">#F2F5FA</span><em>Títulos y datos</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#A6AFC2"></div><div class="sw-m"><b>Texto secundario</b><span class="hex">#A6AFC2</span><em>Descripciones y metadatos</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#6E7A93"></div><div class="sw-m"><b>Texto terciario</b><span class="hex">#6E7A93</span><em>Etiquetas · placeholders</em></div></div>
+      </div>
+    </div>
+
+    <div class="swgroup">
+      <b>Semánticos — señales, no decoración</b>
+      <i>La victoria se pinta de naranja; el verde solo confirma operaciones del sistema.</i>
+      <div class="sws">
+        <div class="sw"><div class="sw-c" style="background:#34D399"></div><div class="sw-m"><b>Éxito</b><span class="hex">#34D399</span><em>Reportada / guardado / activo</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#FBBF24"></div><div class="sw-m"><b>Atención</b><span class="hex">#FBBF24</span><em>Empate de juego · penalización</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#F43F5E"></div><div class="sw-m"><b>Doble Loss</b><span class="hex">#F43F5E</span><em>El color de la derrota compartida</em></div></div>
+        <div class="sw"><div class="sw-c" style="background:#38BDF8"></div><div class="sw-m"><b>Info</b><span class="hex">#38BDF8</span><em>Bye · avisos del sistema</em></div></div>
+      </div>
+    </div>
+
+    <div class="gradbar"><span>GRADIENTE DE ACCIÓN — 135° · #FB8F3C → #EA580C — solo para el CTA principal y la marca</span></div>
+
+    <div class="demo">
+      <span class="lbl">Botones y estados en contexto:</span>
+      <button class="btn btn-pri"><svg class="ic"><use href="#i-play"/></svg> Emparejar ronda</button>
+      <button class="btn btn-sec">Continuar</button>
+      <button class="btn btn-ghost">Cancelar</button>
+      <button class="btn btn-dl"><svg class="ic"><use href="#i-dl"/></svg> Doble Loss</button>
+      <span class="chip chip-ok">✓ Reportada</span>
+      <span class="chip chip-o chip-live">● En juego</span>
+      <span class="chip chip-bad">DL ×1</span>
+      <span class="chip chip-info">BYE</span>
+      <span class="chip chip-mut">Retirado</span>
+    </div>
+    <div class="note"><svg class="ic"><use href="#i-alert"/></svg>
+      <span><b>Regla de oro de las tablas:</b> todos los números se renderizan con <i>tabular-nums</i> — columnas
+      perfectamente alineadas, lectura vertical instantánea para el organizador con prisa.</span></div>
+  </section>
+
+  <!-- ══════════ 02 MÓDULOS ══════════ -->
+  <section class="bsec" id="b-mod">
+    <div class="kick">02 · Arquitectura</div>
+    <h2>Mapa de módulos — 4 capas</h2>
+    <p class="lead">El corazón (dominio) no sabe que existe una interfaz: es una librería pura de TypeScript,
+    100% testeable. La UI y la BD son capas desechables alrededor de ese motor.</p>
+
+    <div class="layers">
+      <div class="layer">
+        <div class="layer-h"><b>Presentación</b><span class="chip chip-mut">lo que ve el organizador</span></div>
+        <p>React dentro de la ventana nativa de Tauri 2.</p>
+        <div class="mods">
+          <div class="mod"><svg class="ic"><use href="#i-grid"/></svg><div><b>App Shell</b><span>Ventana, navegación lateral, atajos</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-list"/></svg><div><b>Pantallas</b><span>Inicio · Crear torneo · Torneo (rondas + clasificación) · Cierre · Configuración</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-zap"/></svg><div><b>Componentes clave</b><span>Tabla viva · chips de estado · modal de captura · confirmación con retención · timer</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-gear"/></svg><div><b>Tema</b><span>Tokens CSS (esta paleta) · modo carbón / claro</span></div></div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="layer-h"><b>Aplicación</b><span class="chip chip-mut">casos de uso</span></div>
+        <p>Orquestan el motor y le dan persistencia. Aquí vive el "scorekeeper".</p>
+        <div class="mods">
+          <div class="mod"><svg class="ic"><use href="#i-clock"/></svg><div><b>Gestión de rondas</b><span>Abrir → emparejar → reportar → cerrar (con confirmación de resultados)</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-edit"/></svg><div><b>Captura de resultados</b><span>Juego a juego + Gana P1 / P2 / ⚠ Doble Loss / Bye</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-users"/></svg><div><b>Duelistas</b><span>Registro por nombre · drops · penalidades (Warning/GL/ML/DQ)</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-trophy"/></svg><div><b>Top Cut opcional</b><span>Checkbox en creación, para eventos grandes</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-save"/></svg><div><b>Cierre y guardado</b><span>Podio 1-2-3 · guardar en historial del Inicio</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-alert"/></svg><div><b>Auditoría</b><span>Toda corrección queda en bitácora con antes/después</span></div></div>
+        </div>
+      </div>
+
+      <div class="layer core">
+        <div class="layer-h"><b>Dominio — el motor</b><span class="chip chip-o">⭐ librería pura · sin UI · sin BD</span></div>
+        <p>Funciones puras (estado → estado). Aquí está el valor real del proyecto y sus tests.</p>
+        <div class="mods">
+          <div class="mod"><svg class="ic"><use href="#i-zap"/></svg><div><b>Modelo</b><span>Torneo · Duelista · Partida · Juego (la secuencia importa)</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-grid"/></svg><div><b>Emparejamiento suizo</b><span>Grupos por puntos · fold top/Bottom · anti-revancha · backtracking</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-list"/></svg><div><b>Tiebreakers KDE v2.5</b><span>Pts → OMW% → GWP% → OGW% · piso 33% por rival</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-dl"/></svg><div><b>End of Match</b><span>DL por tiempo o no reporte · bye único · empate de juego → 4º juego</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-check"/></svg><div><b>Validaciones</b><span>No revanchas · bye no repetido · drops tras ronda</span></div></div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="layer-h"><b>Infraestructura</b><span class="chip chip-mut">que nada se pierda</span></div>
+        <p>Robustez para el peor día del año (se va la luz en la ronda 4).</p>
+        <div class="mods">
+          <div class="mod"><svg class="ic"><use href="#i-clock"/></svg><div><b>SQLite</b><span>Escrituras atómicas (WAL) · autosave en cada cambio</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-save"/></svg><div><b>Historial de torneos</b><span>Los guardados viven en el Inicio con su tabla final</span></div></div>
+          <div class="mod"><svg class="ic"><use href="#i-edit"/></svg><div><b>Bitácora</b><span>Registro inmutable de correcciones</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kick" style="margin-top:34px">Mapa de pantallas</div>
+    <h2>El flujo en pantallas</h2>
+    <div class="smap">
+      <div class="sm"><svg class="ic lg"><use href="#i-home"/></svg><div><b>1 · Inicio</b><span>Bienvenida, botón "Crear torneo" y torneos recientes con su tabla final.</span></div></div>
+      <div class="sm"><svg class="ic lg"><use href="#i-play"/></svg><div><b>2 · Crear torneo</b><span>Nombre → duelistas (solo nombre) → confirmación con nº y rondas automáticas.</span></div></div>
+      <div class="sm"><svg class="ic lg"><use href="#i-grid"/></svg><div><b>3 · Torneo</b><span>Sub-pestañas: Ronda actual (emparejamientos) y Clasificación en vivo.</span></div></div>
+      <div class="sm"><svg class="ic lg"><use href="#i-edit"/></svg><div><b>4 · Resultado (modal)</b><span>Captura juego a juego y el outcome estrella: ⚠ Doble Loss.</span></div></div>
+      <div class="sm"><svg class="ic lg"><use href="#i-trophy"/></svg><div><b>5 · Cierre</b><span>Clasificación final con podio 1-2-3 y botón "Guardar torneo".</span></div></div>
+      <div class="sm"><svg class="ic lg"><use href="#i-gear"/></svg><div><b>6 · Configuración</b><span>Reloj visible, desempates, defaults, tabla de rondas.</span></div></div>
+    </div>
+  </section>
+
+  <!-- ══════════ 03 PANTALLAS ══════════ -->
+  <section class="bsec on" id="b-ui">
+    <div class="kick">03 · Interfaz</div>
+    <h2>Pantallas — maqueta navegable</h2>
+    <p class="lead">Recorre el flujo completo. El asistente <b>agrega duelistas de verdad</b>, la confirmación de
+    inicio calcula las rondas automáticamente, y "Siguiente ronda" exige <b>mantener presionado</b> tras revisar
+    los resultados.</p>
+
+    <div class="scrnav">
+      <button class="spill on" data-scr="scr-home">Inicio</button>
+      <button class="spill" data-scr="scr-crear">Crear torneo</button>
+      <button class="spill" data-scr="scr-torneo">Torneo</button>
+      <button class="spill" data-scr="scr-final">Cierre <span class="tag">demo</span></button>
+      <button class="spill" data-scr="scr-conf">Configuración</button>
+    </div>
+
+    <div class="appwin">
+      <div class="tbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Swiss Duelist — maqueta v0.2</span></div>
+      <div class="app">
+
+        <aside class="side">
+          <div class="logo">
+            <div class="lmark"><svg class="ic lg"><use href="#i-zap"/></svg></div>
+            <div><b>Swiss Duelist</b><small>Torneos suizos</small></div>
+          </div>
+          <nav class="anav">
+            <div class="anl">Menú</div>
+            <button class="ai on" data-scr="scr-home"><svg class="ic"><use href="#i-home"/></svg>Inicio</button>
+            <button class="ai" data-scr="scr-torneo"><svg class="ic"><use href="#i-grid"/></svg>Torneo</button>
+            <button class="ai" data-scr="scr-crear"><svg class="ic"><use href="#i-play"/></svg>Nuevo torneo</button>
+            <div class="anl">Sistema</div>
+            <button class="ai" data-scr="scr-conf"><svg class="ic"><use href="#i-gear"/></svg>Configuración</button>
+          </nav>
+          <div class="bot"></div>
+        </aside>
+
+        <div class="main">
+          <div class="top">
+            <div class="tt">Swiss Duelist<small>gestor de torneos suizos · v2.5</small></div>
+            <span class="sp"></span>
+            <div class="avat">ORG</div>
+          </div>
+
+          <div class="cont">
+
+            <!-- ── INICIO ── -->
+            <div class="screen on" id="scr-home">
+              <div class="hero">
+                <h3>Organiza tu torneo,<br>de la lista de duelistas <em>al podio</em>.</h3>
+                <p>Emparejamientos suizos automáticos, desempates oficiales KDE v2.5 con doble loss, y una
+                clasificación que se mantiene sola. Sin cuentas, sin web, sin complicaciones.</p>
+                <button class="btn btn-pri big" data-scr="scr-crear"><svg class="ic lg"><use href="#i-plus"/></svg> Crear torneo</button>
+              </div>
+
+              <div class="recents">
+                <b style="font-size:14px;font-weight:750">Torneos recientes</b>
+                <div class="recent-grid">
+                  <div class="card rcard">
+                    <div class="rhead">
+                      <div><b>Liga OTS Verano 2026</b><small>12 jun · 22 duelistas · 5 rondas</small></div>
+                      <span class="chip chip-ok">Finalizado</span>
+                    </div>
+                    <table class="tbl">
+                      <thead><tr><th>#</th><th>Duelista</th><th class="num">Pts</th><th class="num">OMW%</th></tr></thead>
+                      <tbody>
+                        <tr class="r1"><td><span class="rank r1">1</span></td><td><b>Oskar V.</b></td><td class="num">15</td><td class="num">70.8</td></tr>
+                        <tr class="r2"><td><span class="rank r2">2</span></td><td><b>Diego L.</b></td><td class="num">12</td><td class="num">63.3</td></tr>
+                        <tr class="r3"><td><span class="rank r3">3</span></td><td><b>Martín R.</b></td><td class="num">12</td><td class="num">60.0</td></tr>
+                        <tr><td><span class="rank rn">4</span></td><td>Ana P.</td><td class="num">9</td><td class="num">55.5</td></tr>
+                        <tr><td><span class="rank rn">5</span></td><td>Rafa G.</td><td class="num">9</td><td class="num">52.0</td></tr>
+                        <tr class="dots"><td colspan="4">· · ·</td></tr>
+                      </tbody>
+                    </table>
+                    <button class="link" data-toast="Abrir torneo guardado (solo lectura) — en el plan">Ver tabla completa →</button>
+                  </div>
+
+                  <div class="card rcard">
+                    <div class="rhead">
+                      <div><b>School League Primavera</b><small>3 may · 14 duelistas · 4 rondas</small></div>
+                      <span class="chip chip-ok">Finalizado</span>
+                    </div>
+                    <table class="tbl">
+                      <thead><tr><th>#</th><th>Duelista</th><th class="num">Pts</th><th class="num">OMW%</th></tr></thead>
+                      <tbody>
+                        <tr class="r1"><td><span class="rank r1">1</span></td><td><b>Lía T.</b></td><td class="num">12</td><td class="num">66.7</td></tr>
+                        <tr class="r2"><td><span class="rank r2">2</span></td><td><b>Jorge A.</b></td><td class="num">9</td><td class="num">58.3</td></tr>
+                        <tr class="r3"><td><span class="rank r3">3</span></td><td><b>Kevin S.</b></td><td class="num">9</td><td class="num">50.0</td></tr>
+                        <tr><td><span class="rank rn">4</span></td><td>Sofía M.</td><td class="num">6</td><td class="num">47.2</td></tr>
+                        <tr class="dots"><td colspan="4">· · ·</td></tr>
+                      </tbody>
+                    </table>
+                    <button class="link" data-toast="Abrir torneo guardado (solo lectura) — en el plan">Ver tabla completa →</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── CREAR TORNEO ── -->
+            <div class="screen" id="scr-crear">
+              <div class="wiz">
+                <div class="steps">
+                  <div class="step now" data-wstep="1"><span class="sn">1</span><div><b>Datos</b><small>Nombre y formato</small></div></div>
+                  <div class="step" data-wstep="2"><span class="sn">2</span><div><b>Duelistas</b><small>Solo el nombre</small></div></div>
+                  <div class="step" data-wstep="3"><span class="sn">3</span><div><b>Revisión</b><small>Confirmar e iniciar</small></div></div>
+                </div>
+
+                <div>
+                  <!-- paso 1 -->
+                  <div class="wbody on" id="wstep1">
+                    <div class="field">
+                      <label>Nombre del torneo</label>
+                      <div class="input"><input id="tname" value="Liga OTS Otoño 2026" placeholder="Ej. Torneo de tienda #12"></div>
+                    </div>
+                    <div class="field">
+                      <label>Tiempo por ronda</label>
+                      <div class="seg">
+                        <button>45 min</button><button class="on">50 min</button><button>60 min</button>
+                      </div>
+                    </div>
+                    <div class="field">
+                      <label>Opciones</label>
+                      <div class="optrow">
+                        <div><b>Top 8 final</b><small>Eliminación directa al terminar las suizas · para eventos grandes</small></div>
+                        <div class="sw2" id="swTop"></div>
+                      </div>
+                      <div class="optrow">
+                        <div><b>Reloj de ronda visible</b><small>Puedes cambiarlo en Configuración</small></div>
+                        <div class="sw2 on" id="swClock2"></div>
+                      </div>
+                    </div>
+                    <div class="wfoot"><span></span><button class="btn btn-pri" data-goto="2">Continuar <svg class="ic"><use href="#i-chev"/></svg></button></div>
+                  </div>
+
+                  <!-- paso 2 -->
+                  <div class="wbody" id="wstep2">
+                    <div class="field">
+                      <label>Agregar duelista</label>
+                      <div class="addrow">
+                        <div class="input" style="flex:1"><input id="dlname" placeholder="Nombre del duelista"></div>
+                        <button class="btn btn-sec" id="addDl"><svg class="ic"><use href="#i-plus"/></svg> Agregar</button>
+                      </div>
+                      <ul class="dlist" id="dllist">
+                        <li class="dl-row"><b>Oskar Villaseñor</b><button class="dx">✕</button></li>
+                        <li class="dl-row"><b>Martín Ruiz</b><button class="dx">✕</button></li>
+                        <li class="dl-row"><b>Diego Lara</b><button class="dx">✕</button></li>
+                        <li class="dl-row"><b>Ana Padilla</b><button class="dx">✕</button></li>
+                        <li class="dl-row"><b>Kevin Sánchez</b><button class="dx">✕</button></li>
+                        <li class="dl-row"><b>Sofía Márquez</b><button class="dx">✕</button></li>
+                        <li class="dl-row"><b>Jorge Aguilar</b><button class="dx">✕</button></li>
+                        <li class="dl-row"><b>Lía Torres</b><button class="dx">✕</button></li>
+                      </ul>
+                      <div style="margin-top:8px;font-size:12px;color:var(--tx-3)"><b id="dlcount" style="color:var(--tx-1)">8</b> duelistas · <span id="dlrounds">3</span> rondas (automático)</div>
+                    </div>
+                    <div class="wfoot"><button class="btn btn-ghost" data-goto="1">← Volver</button><button class="btn btn-pri" data-goto="3">Continuar <svg class="ic"><use href="#i-chev"/></svg></button></div>
+                  </div>
+
+                  <!-- paso 3 -->
+                  <div class="wbody" id="wstep3">
+                    <div class="wsum">
+                      <div class="card"><small>Datos</small>
+                        <div class="row"><span>Nombre</span><b id="sumName">Liga OTS Otoño 2026</b></div>
+                        <div class="row"><span>Tiempo</span><b>50 min</b></div>
+                        <div class="row"><span>Top 8</span><b id="sumTop">No</b></div>
+                      </div>
+                      <div class="card"><small>Resumen</small>
+                        <div class="row"><span>Duelistas</span><b id="sumCount">8</b></div>
+                        <div class="row"><span>Rondas suizas</span><b id="sumRounds">3</b></div>
+                        <div class="row"><span>Política</span><b>KDE v2.5</b></div>
+                      </div>
+                    </div>
+                    <button class="btn btn-pri big" id="startBtn" style="width:100%"><svg class="ic lg"><use href="#i-play"/></svg> Iniciar torneo</button>
+                    <p style="font-size:12px;color:var(--tx-3);margin-top:10px;text-align:center">Al iniciar se cierra el registro y se empareja la Ronda 1.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- modal confirmación de inicio -->
+              <div class="mback" id="startModal">
+                <div class="modal" style="width:min(480px,100%)">
+                  <div class="mhead">
+                    <div><span class="k">Paso 3 · Revisión</span><b>¿Iniciar torneo?</b></div>
+                    <button class="xbtn" data-close="startModal"><svg class="ic"><use href="#i-x"/></svg></button>
+                  </div>
+                  <p style="color:var(--tx-2);font-size:13px;margin-bottom:12px"><b id="mName">Liga OTS Otoño 2026</b> · <b id="mCount">8</b> participantes · <b id="mRounds">3</b> rondas suizas.</p>
+                  <div class="mlab">Participantes</div>
+                  <ul class="dlist" id="startList" style="max-height:180px;margin-bottom:14px"></ul>
+                  <div class="legend" style="margin:0 0 16px">
+                    <svg class="ic"><use href="#i-alert"/></svg>
+                    <p>Una vez iniciado, <b>no podrán sumarse nuevos duelistas</b>. El emparejamiento de la Ronda 1 se genera en este instante.</p>
+                  </div>
+                  <div class="mfoot2">
+                    <button class="btn btn-ghost" data-close="startModal">Cancelar</button>
+                    <button class="btn btn-pri" id="startConfirm"><svg class="ic"><use href="#i-check"/></svg> Confirmar e iniciar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── TORNEO ── -->
+            <div class="screen" id="scr-torneo">
+              <div class="tour-head">
+                <div class="tt">Liga OTS Otoño 2026<small>ronda <span id="rnd">4</span> de 6 · suizo</small></div>
+                <span class="chip chip-o chip-live clock"><svg class="ic" style="width:12px;height:12px"><use href="#i-clock"/></svg> <span id="tchip">41:32</span></span>
+                <span class="chip chip-ok">12/12 reportadas</span>
+                <div class="sp2">
+                  <button class="btn btn-pri" id="nextRound"><svg class="ic"><use href="#i-play"/></svg> Siguiente ronda</button>
+                </div>
+              </div>
+
+              <div class="subt">
+                <button class="on" data-view="view-ronda">Ronda actual</button>
+                <button data-view="view-clasi">Clasificación</button>
+              </div>
+
+              <!-- sub-vista: ronda -->
+              <div class="view on" id="view-ronda">
+                <div class="timerbox clock">
+                  <span class="tv" id="tbig">41:32</span>
+                  <div class="tb"><i id="tbar" style="width:83%"></i></div>
+                  <small>de 50:00</small>
+                </div>
+                <div class="mesas">
+                  <div class="mesa done">
+                    <div class="mtop"><span class="mn">MESA 1</span><span class="chip chip-ok">✓ 2–1 Oskar</span></div>
+                    <div class="mvs">
+                      <div class="mp"><b>Oskar Villaseñor</b><small>9 pts · 3–0</small></div>
+                      <div class="vsline">VS</div>
+                      <div class="mp"><b>Martín Ruiz</b><small>9 pts · 3–0</small></div>
+                    </div>
+                    <div class="mfoot"><span class="mnote">Los dos invictos</span></div>
+                  </div>
+
+                  <div class="mesa done">
+                    <div class="mtop"><span class="mn">MESA 2</span><span class="chip chip-o">✎ EDITANDO…</span></div>
+                    <div class="mvs">
+                      <div class="mp"><b>Diego Lara</b><small>6 pts · 2–1</small></div>
+                      <div class="vsline">VS</div>
+                      <div class="mp"><b>Rafa Gutiérrez</b><small>6 pts · 2–1</small></div>
+                    </div>
+                    <div class="mfoot"><span class="mnote">Modal abierto ↓</span></div>
+                  </div>
+
+                  <div class="mesa done">
+                    <div class="mtop"><span class="mn">MESA 3</span><span class="chip chip-ok">✓ 2–0 Ana</span></div>
+                    <div class="mvs">
+                      <div class="mp"><b>Ana Padilla <span class="chip chip-bad">DL</span></b><small>6 pts · 2–1</small></div>
+                      <div class="vsline">VS</div>
+                      <div class="mp"><b>Kevin Sánchez</b><small>3 pts · 1–2</small></div>
+                    </div>
+                    <div class="mfoot"><span class="mnote"></span></div>
+                  </div>
+
+                  <div class="mesa done">
+                    <div class="mtop"><span class="mn">MESA 4</span><span class="chip chip-ok">✓ 2–1 Sofía</span></div>
+                    <div class="mvs">
+                      <div class="mp"><b>Sofía Márquez</b><small>3 pts · 1–2</small></div>
+                      <div class="vsline">VS</div>
+                      <div class="mp"><b>Jorge Aguilar</b><small>3 pts · 1–2</small></div>
+                    </div>
+                    <div class="mfoot"><span class="mnote"></span></div>
+                  </div>
+
+                  <div class="mesa done">
+                    <div class="mtop"><span class="mn">MESA 5</span><span class="chip chip-ok">✓ 2–0 Lía</span></div>
+                    <div class="mvs">
+                      <div class="mp"><b>Lía Torres</b><small>3 pts · 1–2</small></div>
+                      <div class="vsline">VS</div>
+                      <div class="mp"><b>Elena Castro</b><small>3 pts · 1–2</small></div>
+                    </div>
+                    <div class="mfoot"><span class="mnote"></span></div>
+                  </div>
+
+                  <div class="collapse"><svg class="ic"><use href="#i-chev"/></svg> Mesas 6 – 12 · reportadas · 1 doble loss</div>
+
+                  <div class="mesa bye">
+                    <div class="mtop"><span class="mn">BYE</span><span class="chip chip-info">BYE · R4</span></div>
+                    <div class="mvs"><div class="mp"><b>Marcos Flores</b><small>0 pts · 0–3</small></div></div>
+                    <div class="mfoot"><span class="mnote">3 pts · sin bye previo</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- sub-vista: clasificación -->
+              <div class="view" id="view-clasi">
+                <div class="card" style="padding:6px 14px">
+                  <table class="tbl">
+                    <thead><tr><th>#</th><th>Duelista</th><th class="num">Pts</th><th class="num">Récord</th><th class="num">Juegos</th><th class="num">OMW%</th><th class="num">GWP%</th><th class="num">OGW%</th><th></th></tr></thead>
+                    <tbody>
+                      <tr><td><span class="rank rn">1</span></td><td><b>Oskar Villaseñor</b></td><td class="num"><b>9</b></td><td class="num rec">3–0</td><td class="num">6–1</td><td class="num">66.7</td><td class="num">85.7</td><td class="num">61.9</td><td></td></tr>
+                      <tr><td><span class="rank rn">2</span></td><td><b>Martín Ruiz</b></td><td class="num"><b>9</b></td><td class="num rec">3–0</td><td class="num">6–2</td><td class="num">55.6</td><td class="num">75.0</td><td class="num">57.1</td><td></td></tr>
+                      <tr><td><span class="rank rn">3</span></td><td><b>Diego Lara</b></td><td class="num"><b>6</b></td><td class="num rec">2–1</td><td class="num">4–2</td><td class="num">66.5</td><td class="num">66.7</td><td class="num">59.5</td><td></td></tr>
+                      <tr class="row-dl"><td><span class="rank rn">4</span></td><td><b>Ana Padilla</b> <span class="chip chip-bad">DL ×1</span></td><td class="num">6</td><td class="num rec">2–1</td><td class="num">5–2</td><td class="num">55.5</td><td class="num">71.4</td><td class="num">55.4</td><td><button class="btn btn-ghost" data-toast="Marcar como retirado (drop) · deja de emparejarse y sus resultados siguen contando en OMW" style="padding:5px 7px" title="Retirar del torneo"><svg class="ic"><use href="#i-userx"/></svg></button></td></tr>
+                      <tr><td><span class="rank rn">5</span></td><td><b>Rafa Gutiérrez</b></td><td class="num">6</td><td class="num rec">2–1</td><td class="num">4–3</td><td class="num">44.4</td><td class="num">57.1</td><td class="num">53.8</td><td><button class="btn btn-ghost" data-toast="Marcar como retirado (drop)" style="padding:5px 7px" title="Retirar del torneo"><svg class="ic"><use href="#i-userx"/></svg></button></td></tr>
+                      <tr><td><span class="rank rn">6</span></td><td>Kevin Sánchez <span class="chip chip-warn">GL</span></td><td class="num">3</td><td class="num rec">1–2</td><td class="num">3–4</td><td class="num">48.1</td><td class="num">42.9</td><td class="num">50.0</td><td></td></tr>
+                      <tr><td><span class="rank rn">7</span></td><td>Sofía Márquez</td><td class="num">3</td><td class="num rec">1–2</td><td class="num">3–4</td><td class="num">44.4</td><td class="num">42.9</td><td class="num">47.6</td><td></td></tr>
+                      <tr class="mut"><td><span class="rank rn">8</span></td><td>Bruno Díaz <span class="chip chip-mut">Retirado</span></td><td class="num">3</td><td class="num rec">1–2</td><td class="num">3–4</td><td class="num">33.3</td><td class="num">42.9</td><td class="num">41.7</td><td></td></tr>
+                      <tr class="dots"><td colspan="9">· · ·</td></tr>
+                      <tr><td><span class="rank rn">25</span></td><td>Marcos Flores <span class="chip chip-info">BYE</span></td><td class="num">0</td><td class="num rec">0–3</td><td class="num">1–6</td><td class="num">33.0</td><td class="num">14.3</td><td class="num">40.0</td><td></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="legend">
+                  <svg class="ic lg"><use href="#i-alert"/></svg>
+                  <p><b>Orden (KDE v2.5):</b> Puntos → OMW% → GWP% → OGW% · OMW con piso 33%. Fíjate en <b>Ana (4.ª)</b>:
+                  supera a Diego en GWP% (71.4 vs 66.7), pero su doble loss castigó su OMW% y queda debajo.</p>
+                </div>
+              </div>
+
+              <!-- modal de resultado -->
+              <div class="mback show" id="resModal">
+                <div class="modal" style="width:min(560px,100%)">
+                  <div class="mhead">
+                    <div><span class="k">Mesa 2 · Ronda 4</span><b>Diego Lara vs Rafa Gutiérrez</b></div>
+                    <button class="xbtn" data-close="resModal"><svg class="ic"><use href="#i-x"/></svg></button>
+                  </div>
+                  <div class="vsbox">
+                    <div class="vp"><b>Diego Lara</b><small>6 pts · 2–1</small></div>
+                    <div class="vsm">VS</div>
+                    <div class="vp"><b>Rafa Gutiérrez</b><small>6 pts · 2–1</small></div>
+                  </div>
+                  <div class="mlab">Juegos — primero a 2 victorias</div>
+                  <div class="gps">
+                    <span class="gp gp-p1"><small>J1</small> Diego ✓</span>
+                    <span class="gp gp-draw"><small>J2</small> Empate</span>
+                    <span class="gp gp-p2"><small>J3</small> Rafa ✓</span>
+                    <span class="gp gp-p1"><small>J4</small> Diego ✓</span>
+                    <button class="gp gp-add" data-toast="Agregar juego — no interactivo en la maqueta">+ juego</button>
+                  </div>
+                  <div class="gnote">El empate en J2 no cerró la partida → se jugó un 4º juego (v2.5).</div>
+                  <div class="mlab">Resultado de la partida</div>
+                  <div class="outs">
+                    <button class="out sel" data-out><b>▲ Gana Diego</b></button>
+                    <button class="out" data-out><b>Gana Rafa ▲</b></button>
+                    <button class="out dl" data-out title="0 puntos para ambos · castiga el OMW de los dos"><b>⚠ Doble Loss</b></button>
+                  </div>
+                  <div class="mfoot2">
+                    <button class="btn btn-ghost" data-close="resModal">Cancelar</button>
+                    <button class="btn btn-pri" data-toast="¡Guardar resultado — así se vería! ✓"><svg class="ic"><use href="#i-check"/></svg> Guardar resultado</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- modal siguiente ronda -->
+              <div class="mback" id="roundModal">
+                <div class="modal" style="width:min(520px,100%)">
+                  <div class="mhead">
+                    <div><span class="k">Cierre de ronda</span><b>Resultados de la Ronda 4</b></div>
+                    <button class="xbtn" data-close="roundModal"><svg class="ic"><use href="#i-x"/></svg></button>
+                  </div>
+                  <p style="color:var(--tx-2);font-size:13px;margin-bottom:12px">Verifica cada resultado antes de avanzar — el emparejamiento de la Ronda 5 se genera con estos datos.</p>
+                  <div class="rlist">
+                    <div class="rrow"><span class="rn">M1</span><b>Oskar V.</b><span class="rr">2–1</span><span class="chip chip-o">✓</span></div>
+                    <div class="rrow"><span class="rn">M2</span><b>Diego L.</b><span class="rr">2–1</span><span class="chip chip-o">✓</span></div>
+                    <div class="rrow"><span class="rn">M3</span><b>Ana P.</b><span class="rr">2–0</span><span class="chip chip-o">✓</span></div>
+                    <div class="rrow"><span class="rn">M4</span><b>Sofía M.</b><span class="rr">2–1</span><span class="chip chip-o">✓</span></div>
+                    <div class="rrow"><span class="rn">M5</span><b>Lía T.</b><span class="rr">2–0</span><span class="chip chip-o">✓</span></div>
+                    <div class="rrow"><span class="rn">M6</span><b>Pedro N.</b><span class="rr">2–0</span><span class="chip chip-o">✓</span></div>
+                    <div class="rrow dl"><span class="rn">M7</span><b>Doble Loss</b><span class="rr">tiempo</span><span class="chip chip-bad">DL</span></div>
+                    <div class="rrow"><span class="rn">M8–12</span><b>5 partidas</b><span class="rr">reportadas</span><span class="chip chip-ok">✓</span></div>
+                    <div class="rrow bye"><span class="rn">BYE</span><b>Marcos F.</b><span class="rr">+3 pts</span><span class="chip chip-info">BYE</span></div>
+                  </div>
+                  <div class="hold" id="holdBtn"><div class="fill"></div><span>Mantén presionado para cerrar la ronda</span></div>
+                  <div class="mfoot2"><button class="btn btn-ghost" data-close="roundModal">Cancelar</button></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── CIERRE ── -->
+            <div class="screen" id="scr-final">
+              <div class="tour-head">
+                <div class="tt">Liga OTS Otoño 2026<small>finalizada · 6 rondas · 25 duelistas</small></div>
+                <span class="chip chip-ok">Torneo finalizado</span>
+                <div class="sp2"><button class="btn btn-pri" id="saveBtn"><svg class="ic"><use href="#i-save"/></svg> Guardar torneo</button></div>
+              </div>
+
+              <div class="podium">
+                <div class="pod pod2"><small>2º lugar</small><b>Martín Ruiz</b><span>15 pts · 5–1</span></div>
+                <div class="pod pod1"><small>🏆 Campeón</small><b>Oskar Villaseñor</b><span>18 pts · 6–0</span></div>
+                <div class="pod pod3"><small>3er lugar</small><b>Diego Lara</b><span>12 pts · 4–2</span></div>
+              </div>
+
+              <div class="card" style="padding:6px 14px">
+                <table class="tbl">
+                  <thead><tr><th>#</th><th>Duelista</th><th class="num">Pts</th><th class="num">Récord</th><th class="num">Juegos</th><th class="num">OMW%</th><th class="num">GWP%</th><th class="num">OGW%</th></tr></thead>
+                  <tbody>
+                    <tr class="r1"><td><span class="rank r1">1</span></td><td><b>Oskar Villaseñor</b></td><td class="num"><b>18</b></td><td class="num rec">6–0</td><td class="num">12–1</td><td class="num">72.2</td><td class="num">92.3</td><td class="num">64.1</td></tr>
+                    <tr class="r2"><td><span class="rank r2">2</span></td><td><b>Martín Ruiz</b></td><td class="num"><b>15</b></td><td class="num rec">5–1</td><td class="num">10–3</td><td class="num">63.9</td><td class="num">76.9</td><td class="num">58.7</td></tr>
+                    <tr class="r3"><td><span class="rank r3">3</span></td><td><b>Diego Lara</b></td><td class="num"><b>12</b></td><td class="num rec">4–2</td><td class="num">8–5</td><td class="num">61.1</td><td class="num">61.5</td><td class="num">55.3</td></tr>
+                    <tr class="row-dl"><td><span class="rank rn">4</span></td><td>Ana Padilla <span class="chip chip-bad">DL ×1</span></td><td class="num">12</td><td class="num rec">4–2</td><td class="num">9–5</td><td class="num">55.5</td><td class="num">64.3</td><td class="num">52.1</td></tr>
+                    <tr><td><span class="rank rn">5</span></td><td>Rafa Gutiérrez</td><td class="num">9</td><td class="num rec">3–3</td><td class="num">8–7</td><td class="num">50.0</td><td class="num">53.3</td><td class="num">49.0</td></tr>
+                    <tr><td><span class="rank rn">6</span></td><td>Sofía Márquez</td><td class="num">9</td><td class="num rec">3–3</td><td class="num">7–7</td><td class="num">48.1</td><td class="num">50.0</td><td class="num">47.6</td></tr>
+                    <tr><td><span class="rank rn">7</span></td><td>Kevin Sánchez</td><td class="num">9</td><td class="num rec">3–3</td><td class="num">7–8</td><td class="num">46.3</td><td class="num">46.7</td><td class="num">46.1</td></tr>
+                    <tr><td><span class="rank rn">8</span></td><td>Jorge Aguilar</td><td class="num">6</td><td class="num rec">2–4</td><td class="num">5–9</td><td class="num">44.4</td><td class="num">35.7</td><td class="num">44.8</td></tr>
+                    <tr class="dots"><td colspan="8">· · ·</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="legend">
+                <svg class="ic lg"><use href="#i-save"/></svg>
+                <p>Al presionar <b>Guardar torneo</b>, el evento se sella y aparece en los <b>recientes del Inicio</b>
+                con esta tabla final. (En la maqueta, pruébalo y mira el toast.)</p>
+              </div>
+            </div>
+
+            <!-- ── CONFIGURACIÓN ── -->
+            <div class="screen" id="scr-conf">
+              <div class="tour-head"><div class="tt">Configuración<small>preferencias de la app</small></div></div>
+              <div class="cfg-list">
+                <div class="cfg-row"><div><b>Mostrar reloj de ronda</b><small>Oculta el reloj en el Torneo · pruébalo en la pantalla Torneo</small></div><div class="sw2 on" id="tglClock"></div></div>
+                <div class="cfg-row"><div><b>Avance con retención</b><small>Obliga a mantener presionado para cerrar ronda (recomendado)</small></div><div class="sw2 on"></div></div>
+                <div class="cfg-row"><div><b>Sonido al cerrar ronda</b><small>Un aviso corto al confirmar</small></div><div class="sw2"></div></div>
+                <div class="cfg-row"><div><b>Top 8 por defecto</b><small>Marcado al crear torneos nuevos</small></div><div class="sw2"></div></div>
+                <div class="cfg-row"><div><b>Política de desempates</b><small>Pts → OMW% → GWP% → OGW% · piso 33%</small></div><span class="chip chip-o">KDE v2.5</span></div>
+              </div>
+              <div class="cfg-note">Tabla de rondas por jugadores (se aplica al confirmar el inicio): 4–8 → 3 · 9–16 → 4 · 17–32 → 5 · 33–64 → 6 · 65–128 → 7.</div>
+            </div>
+
+          </div><!-- /cont -->
+        </div><!-- /main -->
+      </div><!-- /app -->
+    </div><!-- /appwin -->
+
+    <div class="note"><svg class="ic"><use href="#i-alert"/></svg>
+      <span><b>Lo que no está maquetado aún (a propósito):</b> la corrección de un resultado con diff antes/después,
+      el top cut opcional en acción, y el detalle de un torneo guardado desde el Inicio. Todo vive en el plan de módulos.</span></div>
+  </section>
+
+</div><!-- /wrap -->
+
+<div id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+
+/* tabs del tablero */
+$$('.btab').forEach(b=>b.addEventListener('click',()=>{
+  $$('.btab').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  $$('.bsec').forEach(x=>x.classList.remove('on')); $('#'+b.dataset.tab).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* cambio de pantalla */
+function scr(id){
+  $$('.screen').forEach(x=>x.classList.remove('on'));
+  const t=$('#'+id); if(t) t.classList.add('on');
+  $$('.spill').forEach(p=>p.classList.toggle('on',p.dataset.scr===id));
+  $$('.ai').forEach(p=>p.classList.toggle('on',p.dataset.scr===id));
+}
+$$('[data-scr]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();scr(b.dataset.scr);}));
+
+/* toast */
+let tt;
+function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('show'),2600);}
+$$('[data-toast]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();toast(b.dataset.toast);}));
+
+/* cerrar modales */
+$$('[data-close]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();$('#'+b.dataset.close).classList.remove('show');}));
+
+/* outcome buttons del modal */
+$$('[data-out]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();$$('[data-out]').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');}));
+
+/* toggles genéricos */
+$$('.sw2').forEach(s=>s.addEventListener('click',()=>{
+  s.classList.toggle('on');
+  if(s.id==='tglClock') document.body.classList.toggle('no-clock',!s.classList.contains('on'));
+}));
+
+/* ── wizard ── */
+function roundsFor(n){ if(n<4) return 1; if(n<=8) return 3; if(n<=16) return 4; if(n<=32) return 5; if(n<=64) return 6; if(n<=128) return 7; return 8; }
+function syncCount(){
+  const n=$$('#dllist .dl-row').length;
+  $('#dlcount').textContent=n;
+  $('#dlrounds').textContent=roundsFor(n);
+  $('#sumCount').textContent=n;
+  $('#sumRounds').textContent=roundsFor(n);
+}
+function wstep(n){
+  $$('.wbody').forEach(x=>x.classList.toggle('on',x.id==='wstep'+n));
+  $$('.step').forEach(s=>{
+    s.classList.toggle('now',s.dataset.wstep===String(n));
+    s.classList.toggle('done',Number(s.dataset.wstep)<n);
+  });
+}
+$$('[data-goto]').forEach(b=>b.addEventListener('click',()=>{
+  if(b.dataset.goto==='3'){ $('#sumName').textContent=$('#tname').value||'Torneo sin nombre'; $('#sumTop').textContent=$('#swTop').classList.contains('on')?'Sí':'No'; }
+  wstep(Number(b.dataset.goto));
+}));
+$$('[data-wstep]').forEach(s=>s.addEventListener('click',()=>{
+  if(s.dataset.wstep==='3'){ $('#sumName').textContent=$('#tname').value||'Torneo sin nombre'; $('#sumTop').textContent=$('#swTop').classList.contains('on')?'Sí':'No'; }
+  wstep(Number(s.dataset.wstep));
+}));
+
+function addDuelist(name){
+  const li=document.createElement('li'); li.className='dl-row';
+  const b=document.createElement('b'); b.textContent=name;
+  const x=document.createElement('button'); x.className='dx'; x.textContent='✕';
+  x.addEventListener('click',()=>{li.remove();syncCount();});
+  li.appendChild(b); li.appendChild(x);
+  $('#dllist').appendChild(li); syncCount();
+}
+$('#addDl').addEventListener('click',()=>{const v=$('#dlname').value.trim(); if(v){addDuelist(v);$('#dlname').value='';}});
+$('#dlname').addEventListener('keydown',e=>{if(e.key==='Enter'){const v=e.target.value.trim();if(v){addDuelist(v);e.target.value='';}}});
+$$('#dllist .dx').forEach(x=>x.addEventListener('click',()=>{x.closest('.dl-row').remove();syncCount();}));
+
+/* iniciar torneo → modal de confirmación */
+function openStart(){
+  const names=$$('#dllist .dl-row b').map(b=>b.textContent);
+  const ul=$('#startList'); ul.innerHTML='';
+  names.forEach(n=>{const li=document.createElement('li');li.className='dl-row';li.innerHTML='<b>'+n+'</b>';ul.appendChild(li);});
+  $('#mName').textContent=$('#tname').value||'Torneo sin nombre';
+  $('#mCount').textContent=names.length;
+  $('#mRounds').textContent=roundsFor(names.length);
+  $('#startModal').classList.add('show');
+}
+$('#startBtn').addEventListener('click',openStart);
+$('#startConfirm').addEventListener('click',()=>{
+  $('#startModal').classList.remove('show');
+  toast('Torneo iniciado ✓ · Ronda 1 emparejada');
+  scr('scr-torneo');
+});
+
+/* sub-tabs del torneo */
+$$('#scr-torneo .subt [data-view]').forEach(b=>b.addEventListener('click',()=>{
+  $$('#scr-torneo .subt [data-view]').forEach(x=>x.classList.toggle('on',x===b));
+  $$('#scr-torneo .view').forEach(v=>v.classList.toggle('on',v.id===b.dataset.view));
+  $('#resModal').classList.toggle('show', b.dataset.view==='view-ronda');
+}));
+
+/* siguiente ronda */
+$('#nextRound').addEventListener('click',()=>$('#roundModal').classList.add('show'));
+
+/* hold-to-confirm */
+const holdBtn=$('#holdBtn'); let holdT;
+function holdDone(){ $('#roundModal').classList.remove('show'); $('#rnd').textContent='5'; toast('✓ Ronda cerrada · Ronda 5 emparejada'); }
+holdBtn.addEventListener('pointerdown',e=>{e.preventDefault();holdBtn.classList.add('holding');holdT=setTimeout(holdDone,1000);});
+holdBtn.addEventListener('pointerup',()=>{clearTimeout(holdT);holdBtn.classList.remove('holding');});
+holdBtn.addEventListener('pointerleave',()=>{clearTimeout(holdT);holdBtn.classList.remove('holding');});
+
+/* guardar torneo */
+$('#saveBtn').addEventListener('click',()=>{toast('Torneo guardado ✓ · aparecerá en Inicio con su tabla final');});
+
+/* reloj en vivo */
+let t=41*60+32;
+const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+setInterval(()=>{t=Math.max(0,t-1);const f=fmt(t);['tchip','tbig'].forEach(id=>{const el=$('#'+id);if(el)el.textContent=f;});const bar=$('#tbar');if(bar)bar.style.width=(t/(50*60)*100).toFixed(1)+'%';},1000);
+
+syncCount();
+</script>
+</body>
+</html>

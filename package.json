@@ -1,0 +1,10 @@
+{
+  "name": "swiss-duelist",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Gestor de torneos suizos para Yu-Gi-Oh! (app de escritorio)",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
