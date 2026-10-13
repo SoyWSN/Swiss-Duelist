@@ -246,6 +246,7 @@ button { font-family: inherit; }
 .mhead b, .vp b, .pod b, .mp b, .step b, .field label, .anl, .subt button {
   font-family: 'Blocktrain', 'Segoe UI', system-ui, sans-serif;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 .empty h3 { color: var(--tx-1); font-size: 16px; margin-bottom: 6px; }
 .empty p { margin-bottom: 18px; font-size: 13.5px; }
