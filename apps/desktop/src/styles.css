@@ -49,6 +49,8 @@ button { font-family: inherit; }
 .btn-sec:hover { border-color: var(--o-400); }
 .btn-ghost { background: transparent; color: var(--tx-2); }
 .btn-ghost:hover { color: var(--tx-1); }
+.btn-dl { background: rgba(244,63,94,.12); border-color: rgba(244,63,94,.5); color: #ff7a96; }
+.btn-dl:hover { background: rgba(244,63,94,.2); }
 .btn:disabled { opacity: .42; cursor: not-allowed; box-shadow: none; }
 .btn.big { padding: 13px 22px; font-size: 14.5px; }
 
