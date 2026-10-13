@@ -242,6 +242,7 @@ button { font-family: inherit; }
 /* ── animaciones sutiles ── */
 .view-fade { animation: viewfade .3s ease; }
 @keyframes viewfade { from { opacity: 0; } to { opacity: 1; } }
+.step-fade { animation: viewfade .25s ease; }
 
 .rcard { transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease; }
 .rcard:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -18px rgba(0,0,0,.7); }

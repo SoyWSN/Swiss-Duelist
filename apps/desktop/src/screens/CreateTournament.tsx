@@ -50,6 +50,7 @@ export default function CreateTournament({ onStart, onBack }: Props) {
       </div>
 
       <div>
+        <div className="step-fade" key={step}>
         {step === 1 && (
           <>
             <div className="field">
@@ -142,6 +143,7 @@ export default function CreateTournament({ onStart, onBack }: Props) {
             </div>
           </>
         )}
+        </div>
       </div>
     </div>
   );
