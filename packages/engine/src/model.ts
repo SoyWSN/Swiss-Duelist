@@ -24,6 +24,8 @@ export interface Match {
   outcome: MatchOutcome | null;
 }
 
+export type TournamentStatus = 'draft' | 'swiss' | 'finished';
+
 export interface Tournament {
   id: string;
   name: string;
@@ -32,4 +34,22 @@ export interface Tournament {
   /** Ronda actual (1-based). */
   currentRound: number;
   totalRounds: number;
+  status: TournamentStatus;
+  createdAt: string;
+  finishedAt: string | null;
+}
+
+/** Crea un torneo vacío listo para registrar duelistas. */
+export function createTournament(id: string, name: string, totalRounds: number): Tournament {
+  return {
+    id,
+    name,
+    players: [],
+    matches: [],
+    currentRound: 1,
+    totalRounds,
+    status: 'draft',
+    createdAt: new Date().toISOString(),
+    finishedAt: null,
+  };
 }
