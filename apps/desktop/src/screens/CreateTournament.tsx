@@ -116,6 +116,14 @@ export default function CreateTournament({ onStart, onBack }: Props) {
                 <div className="row"><span>Política</span><b>KDE v2.5</b></div>
               </div>
             </div>
+            <div className="field">
+              <label>Duelistas ({players.length})</label>
+              <ul className="dlist">
+                {players.map((n) => (
+                  <li className="dl-row" key={n}><b>{n}</b></li>
+                ))}
+              </ul>
+            </div>
             <div className="legend" style={{ marginTop: 0, marginBottom: 16 }}>
               <span>Al iniciar se cierra el registro y se empareja la Ronda 1. <b>No podrán sumarse nuevos duelistas.</b></span>
             </div>

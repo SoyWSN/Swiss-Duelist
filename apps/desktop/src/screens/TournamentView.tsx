@@ -54,7 +54,7 @@ function HoldButton({ onConfirm, label }: { onConfirm: () => void; label: string
       onPointerCancel={cancel}
     >
       <span className="fill" />
-      <span>{label}</span>
+      <span className="label">{label}</span>
     </button>
   );
 }
@@ -148,8 +148,8 @@ function NextRoundModal({ matches, nameOf, isLastRound, onCancel, onConfirm }: {
               return (
                 <div className="rrow dl" key={m.id}>
                   <span className="rn">M{m.table}</span>
-                  <b>Doble Loss</b>
-                  <span className="rr">{nameOf(m.player1Id)} / {nameOf(m.player2Id)}</span>
+                  <b>{nameOf(m.player1Id)} / {nameOf(m.player2Id)}</b>
+                  <span className="rr">Doble Loss</span>
                   <span className="chip chip-bad">DL</span>
                 </div>
               );

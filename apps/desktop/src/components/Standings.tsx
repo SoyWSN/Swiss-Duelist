@@ -20,6 +20,7 @@ export default function Standings({ standings, onDrop, final }: Props) {
             <th>Duelista</th>
             <th className="num">Pts</th>
             <th className="num">Récord</th>
+            <th className="num">PMW%</th>
             <th className="num">OMW%</th>
             <th className="num">OOMW%</th>
             {showDrop && <th></th>}
@@ -31,7 +32,7 @@ export default function Standings({ standings, onDrop, final }: Props) {
             return (
               <tr
                 key={s.player.id}
-                className={podium ? `r${s.rank}` : s.doubleLosses > 0 ? 'row-dl' : s.player.dropped ? 'mut' : ''}
+                className={podium ? `r${s.rank}` : s.player.dropped ? 'mut' : ''}
               >
                 <td>
                   <span className={`rank ${podium ? `r${s.rank}` : 'rn'}`}>{s.rank}</span>
@@ -43,6 +44,7 @@ export default function Standings({ standings, onDrop, final }: Props) {
                 </td>
                 <td className="num"><b>{s.points}</b></td>
                 <td className="num rec">{s.wins}–{s.losses}</td>
+                <td className="num">{(s.matchWinPct * 100).toFixed(1)}</td>
                 <td className="num">{(s.omw * 100).toFixed(1)}</td>
                 <td className="num">{(s.oomw * 100).toFixed(1)}</td>
                 {showDrop && (
