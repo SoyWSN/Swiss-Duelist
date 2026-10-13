@@ -15,6 +15,8 @@ export default function CreateTournament({ onStart, onBack }: Props) {
   const [name, setName] = useState('');
   const [players, setPlayers] = useState<string[]>([]);
   const [input, setInput] = useState('');
+  const [nameError, setNameError] = useState(false);
+  const [dupError, setDupError] = useState(false);
   const listRef = useRef<HTMLUListElement>(null);
 
   // Al agregar/quitar, baja el scroll para ver siempre al último duelista.
@@ -25,10 +27,22 @@ export default function CreateTournament({ onStart, onBack }: Props) {
 
   function addPlayer() {
     const n = input.trim();
-    if (n && !players.includes(n)) {
-      setPlayers([...players, n]);
-      setInput('');
+    if (!n) return;
+    if (players.includes(n)) {
+      setDupError(true);
+      return;
     }
+    setDupError(false);
+    setPlayers([...players, n]);
+    setInput('');
+  }
+
+  function continueFromStep1() {
+    if (!name.trim()) {
+      setNameError(true);
+      return;
+    }
+    setStep(2);
   }
 
   function removePlayer(n: string) {
@@ -63,15 +77,19 @@ export default function CreateTournament({ onStart, onBack }: Props) {
               <div className="input">
                 <input
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  maxLength={40}
+                  onChange={(e) => { setName(e.target.value); setNameError(false); }}
                   placeholder="Ej. Liga OTS Otoño 2026"
                   autoFocus
                 />
               </div>
+              {nameError && !name.trim() && (
+                <p className="error">El torneo necesita un nombre.</p>
+              )}
             </div>
             <div className="wfoot">
               <button className="btn btn-ghost" onClick={onBack}>Cancelar</button>
-              <button className="btn btn-pri" onClick={() => setStep(2)} disabled={!name.trim()}>
+              <button className="btn btn-pri" onClick={continueFromStep1}>
                 Continuar →
               </button>
             </div>
@@ -86,13 +104,17 @@ export default function CreateTournament({ onStart, onBack }: Props) {
                 <div className="input" style={{ flex: 1 }}>
                   <input
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    maxLength={25}
+                    onChange={(e) => { setInput(e.target.value); setDupError(false); }}
                     onKeyDown={(e) => { if (e.key === 'Enter') addPlayer(); }}
                     placeholder="Nombre del duelista"
                   />
                 </div>
                 <button className="btn btn-sec" onClick={addPlayer}><IconPlus size={16} /> Agregar</button>
               </div>
+              {dupError && (
+                <p className="error">Ya hay un participante con ese nombre.</p>
+              )}
               {players.length > 0 ? (
                 <ul className="dlist" ref={listRef}>
                   {players.map((n) => (
