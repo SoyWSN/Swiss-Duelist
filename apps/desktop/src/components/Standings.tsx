@@ -41,10 +41,11 @@ export default function Standings({ standings, onDrop, final }: Props) {
                 <td>
                   <b>{s.player.name}</b>{' '}
                   {s.doubleLosses > 0 && <span className="chip chip-bad">DL ×{s.doubleLosses}</span>}{' '}
+                  {s.byes > 0 && <span className="chip chip-info">bye</span>}{' '}
                   {s.player.dropped && <span className="chip chip-mut">Retirado</span>}
                 </td>
                 <td className="num"><b>{s.points}</b></td>
-                <td className="num rec">{s.wins}–{s.losses}</td>
+                <td className="num rec">{s.wins + s.byes}–{s.losses}</td>
                 <td className="num">{(s.matchWinPct * 100).toFixed(1)}</td>
                 <td className="num">{(s.omw * 100).toFixed(1)}</td>
                 <td className="num">{(s.oomw * 100).toFixed(1)}</td>
