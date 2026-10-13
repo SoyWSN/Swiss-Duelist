@@ -166,7 +166,7 @@ button { font-family: inherit; }
 .vsm { align-self: center; font-size: 11px; font-weight: 800; color: var(--tx-3); letter-spacing: 1px; }
 .mlab { font-size: 10.5px; font-weight: 800; letter-spacing: 1.2px; color: var(--tx-3); text-transform: uppercase; margin-bottom: 8px; }
 .outs { display: flex; gap: 9px; margin-bottom: 16px; }
-.out { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 15px 8px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--surface-2); cursor: pointer; transition: .15s; }
+.out { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 15px 8px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--surface-2); cursor: pointer; transition: .15s; color: var(--tx-1); }
 .out b { font-size: 13.5px; font-weight: 750; color: var(--tx-1); }
 .out:hover { border-color: var(--o-400); }
 .out.sel { background: rgba(249,115,22,.15); border-color: var(--o-500); box-shadow: 0 0 0 1px var(--o-500) inset; }

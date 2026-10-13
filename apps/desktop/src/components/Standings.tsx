@@ -23,6 +23,7 @@ export default function Standings({ standings, onDrop, final }: Props) {
             <th className="num">PMW%</th>
             <th className="num">OMW%</th>
             <th className="num">OOMW%</th>
+            <th className="num" title="Suma de los cuadrados de las rondas perdidas (menor = mejor)">DDD</th>
             {showDrop && <th></th>}
           </tr>
         </thead>
@@ -47,6 +48,7 @@ export default function Standings({ standings, onDrop, final }: Props) {
                 <td className="num">{(s.matchWinPct * 100).toFixed(1)}</td>
                 <td className="num">{(s.omw * 100).toFixed(1)}</td>
                 <td className="num">{(s.oomw * 100).toFixed(1)}</td>
+                <td className="num">{s.ddd}</td>
                 {showDrop && (
                   <td>
                     {!s.player.dropped ? (

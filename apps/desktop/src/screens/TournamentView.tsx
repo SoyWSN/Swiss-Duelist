@@ -199,7 +199,7 @@ export default function TournamentView({ tournament, standings, clockOn, onRecor
       <div className="tour-head">
         <div className="tt">
           {tournament.name}
-          <small>ronda {tournament.currentRound} de {tournament.totalRounds}</small>
+          <small>ronda {tournament.currentRound} de {tournament.totalRounds} · creado {new Date(tournament.createdAt).toLocaleDateString()}</small>
         </div>
         <RoundClock round={tournament.currentRound} visible={clockOn} />
         <span className="chip chip-ok">{reported}/{currentMatches.length} reportadas</span>

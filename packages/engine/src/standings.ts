@@ -1,16 +1,19 @@
 /**
  * Clasificación y desempates oficiales (Konami Tournament Software, KDE v2.5).
  *
- * Orden de desempate: Puntos → OMW% → OOMW%.
- *   - OMW%  = media del match-win % de tus oponentes (con piso de 33% por oponente).
- *   - OOMW% = media del OMW% de tus oponentes (fuerza de calendario).
+ * Formato oficial del número de desempate: AABBBCCCDDD
+ *   AA  = Puntos
+ *   BBB = OMW%  (match-win % de tus oponentes, con piso de 33% por oponente)
+ *   CCC = OOMW% (match-win % de los oponentes de tus oponentes)
+ *   DDD = suma de los CUADRADOS de las rondas en que perdiste (menor = mejor)
  *
+ * Orden de desempate: Puntos → OMW% → OOMW% → DDD.
  * No existe "game-win %" en Yu-Gi-Oh (eso es de Magic): un 2-0 y un 2-1 valen lo mismo.
  *
  * Supuestos (documentados, refinables según el KTS real):
  *   - matchWinPct = puntos / (3 × rondas jugadas). El bye cuenta como victoria (3 pts) y como ronda.
  *   - El piso de 33% se aplica a cada oponente antes de promediar.
- *   - Los byes no aportan oponente (se excluyen del promedio de OMW/OOMW).
+ *   - Los byes no aportan oponente (se excluyen del promedio de OMW/OOMW) ni cuentan como derrota.
  */
 
 import type { Match, Player } from './model';
@@ -32,6 +35,8 @@ export interface Standing {
   omw: number;
   /** Opponents' Opponents' Match-Win %. */
   oomw: number;
+  /** Suma de los cuadrados de las rondas perdidas (menor = mejor). */
+  ddd: number;
   /** Posición (1-based) según el orden de desempate. */
   rank: number;
 }
@@ -44,10 +49,20 @@ interface Stats {
   byes: number;
   roundsPlayed: number;
   opponents: string[];
+  lostRounds: number[];
 }
 
 function collectStats(playerId: string, matches: Match[]): Stats {
-  const s: Stats = { points: 0, wins: 0, losses: 0, doubleLosses: 0, byes: 0, roundsPlayed: 0, opponents: [] };
+  const s: Stats = {
+    points: 0,
+    wins: 0,
+    losses: 0,
+    doubleLosses: 0,
+    byes: 0,
+    roundsPlayed: 0,
+    opponents: [],
+    lostRounds: [],
+  };
   for (const m of matches) {
     if (m.outcome === null) continue;
 
@@ -69,11 +84,12 @@ function collectStats(playerId: string, matches: Match[]): Stats {
     if (opponentId !== null) s.opponents.push(opponentId);
 
     if (m.outcome === 'P1_WIN') {
-      if (isP1) { s.wins += 1; s.points += WIN_POINTS; } else { s.losses += 1; }
+      if (isP1) { s.wins += 1; s.points += WIN_POINTS; } else { s.losses += 1; s.lostRounds.push(m.round); }
     } else if (m.outcome === 'P2_WIN') {
-      if (isP2) { s.wins += 1; s.points += WIN_POINTS; } else { s.losses += 1; }
+      if (isP2) { s.wins += 1; s.points += WIN_POINTS; } else { s.losses += 1; s.lostRounds.push(m.round); }
     } else if (m.outcome === 'DOUBLE_LOSS') {
       s.doubleLosses += 1;
+      s.lostRounds.push(m.round);
     }
   }
   return s;
@@ -119,6 +135,7 @@ export function computeStandings(players: Player[], matches: Match[]): Standing[
       matchWinPct: mwp.get(p.id)!,
       omw: omw.get(p.id)!,
       oomw: oomw.get(p.id)!,
+      ddd: s.lostRounds.reduce((sum, r) => sum + r * r, 0),
       rank: 0,
     };
   });
@@ -128,6 +145,7 @@ export function computeStandings(players: Player[], matches: Match[]): Standing[
       b.points - a.points ||
       b.omw - a.omw ||
       b.oomw - a.oomw ||
+      a.ddd - b.ddd ||
       a.player.name.localeCompare(b.player.name),
   );
 

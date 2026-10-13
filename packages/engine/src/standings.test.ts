@@ -94,4 +94,30 @@ describe('computeStandings', () => {
     // El OMW de A incluye a B (1 victoria = MWP 1.0).
     expect(byId(s, 'A').omw).toBe(1.0);
   });
+
+  it('DDD = suma de los cuadrados de las rondas perdidas', () => {
+    const players = [p('A'), p('B')];
+    const matches = [
+      m('r1', 1, 1, 'A', 'B', 'P1_WIN'), // B pierde R1
+      m('r2', 2, 1, 'A', 'B', 'P1_WIN'), // B pierde R2
+    ];
+    const s = computeStandings(players, matches);
+    expect(byId(s, 'B').ddd).toBe(1 * 1 + 2 * 2); // 5
+    expect(byId(s, 'A').ddd).toBe(0);
+  });
+
+  it('DDD desempata cuando puntos, OMW% y OOMW% están iguales', () => {
+    const players = [p('A'), p('B'), p('C'), p('D')];
+    const matches = [
+      m('r1-1', 1, 1, 'A', 'B', 'P1_WIN'), // B pierde R1 → DDD 1
+      m('r1-2', 1, 2, 'C', 'D', 'P1_WIN'),
+      m('r2-1', 2, 1, 'A', 'C', 'P1_WIN'), // C pierde R2 → DDD 4
+      m('r2-2', 2, 2, 'B', 'D', 'P1_WIN'),
+    ];
+    const s = computeStandings(players, matches);
+    // B y C empatan en 3 pts, OMW y OOMW; el DDD decide (B 1 < C 4).
+    expect(s.map((x) => x.player.id)).toEqual(['A', 'B', 'C', 'D']);
+    expect(byId(s, 'B').ddd).toBe(1);
+    expect(byId(s, 'C').ddd).toBe(4);
+  });
 });

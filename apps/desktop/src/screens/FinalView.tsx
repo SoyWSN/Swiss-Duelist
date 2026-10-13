@@ -16,7 +16,7 @@ export default function FinalView({ tournament, standings, onSave }: Props) {
       <div className="tour-head">
         <div className="tt">
           {tournament.name}
-          <small>finalizada · {tournament.totalRounds} rondas · {tournament.players.length} duelistas</small>
+          <small>finalizada · {tournament.totalRounds} rondas · {tournament.players.length} duelistas · {new Date(tournament.createdAt).toLocaleDateString()}</small>
         </div>
         <span className="chip chip-ok">Torneo finalizado</span>
         <div className="sp2">

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { roundsForPlayerCount } from '@swiss-duelist/engine';
 import { IconPlay, IconPlus, IconX } from '../components/icons';
 
@@ -12,6 +12,13 @@ export default function CreateTournament({ onStart, onBack }: Props) {
   const [name, setName] = useState('');
   const [players, setPlayers] = useState<string[]>([]);
   const [input, setInput] = useState('');
+  const listRef = useRef<HTMLUListElement>(null);
+
+  // Al agregar/quitar, baja el scroll para ver siempre al último duelista.
+  useEffect(() => {
+    const el = listRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [players.length]);
 
   function addPlayer() {
     const n = input.trim();
@@ -81,7 +88,7 @@ export default function CreateTournament({ onStart, onBack }: Props) {
                 <button className="btn btn-sec" onClick={addPlayer}><IconPlus size={16} /> Agregar</button>
               </div>
               {players.length > 0 ? (
-                <ul className="dlist">
+                <ul className="dlist" ref={listRef}>
                   {players.map((n) => (
                     <li className="dl-row" key={n}>
                       <b>{n}</b>
