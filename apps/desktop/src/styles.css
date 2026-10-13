@@ -242,7 +242,24 @@ button { font-family: inherit; }
 /* ── animaciones sutiles ── */
 .view-fade { animation: viewfade .3s ease; }
 @keyframes viewfade { from { opacity: 0; } to { opacity: 1; } }
-.step-fade { animation: viewfade .25s ease; }
+
+/* ── asistente: contenido + arte por paso ── */
+.wiz-main { display: flex; gap: 26px; align-items: flex-start; min-width: 0; }
+.step-fade { flex: 1 1 auto; min-width: 0; max-width: min(100%, 640px); animation: viewfade .25s ease; }
+.wiz-art {
+  flex: none;
+  height: min(56vh, 420px);
+  width: auto;
+  max-width: 32vw;
+  object-fit: contain;
+  opacity: .95;
+  pointer-events: none;
+  user-select: none;
+  animation: viewfade .45s ease;
+  -webkit-mask-image: linear-gradient(155deg, #000 60%, transparent 96%);
+  mask-image: linear-gradient(155deg, #000 60%, transparent 96%);
+}
+@media (max-width: 940px) { .wiz-art { display: none; } }
 
 .rcard { transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease; }
 .rcard:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -18px rgba(0,0,0,.7); }

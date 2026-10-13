@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { roundsForPlayerCount } from '@swiss-duelist/engine';
 import { IconPlay, IconPlus, IconX } from '../components/icons';
 
+/** Arte decorativo por paso del asistente. */
+const ART: Record<number, string> = { 1: '/wiz-1.png', 2: '/wiz-2.png', 3: '/wiz-3.png' };
+
 interface Props {
   onStart: (name: string, players: string[]) => void;
   onBack: () => void;
@@ -49,7 +52,8 @@ export default function CreateTournament({ onStart, onBack }: Props) {
         </div>
       </div>
 
-      <div>
+      <div className="wiz-main">
+        <img className="wiz-art" key={`art-${step}`} src={ART[step]} alt="" />
         <div className="step-fade" key={step}>
         {step === 1 && (
           <>
