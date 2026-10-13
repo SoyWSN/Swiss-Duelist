@@ -3,6 +3,7 @@ import type { MatchOutcome, Tournament } from '@swiss-duelist/engine';
 import { computeStandings, createTournament, pairRound, roundsForPlayerCount } from '@swiss-duelist/engine';
 import { listTournaments, loadTournament, saveTournament, type TournamentSummary } from './db/repo';
 import { initDb } from './db/db';
+import { IconHome, IconPlus, IconSettings, IconTrophy } from './components/icons';
 import Home from './screens/Home';
 import CreateTournament from './screens/CreateTournament';
 import TournamentView from './screens/TournamentView';
@@ -131,18 +132,18 @@ export default function App() {
     return view === id;
   }
 
-  const nav: { id: View; label: string; icon: string; disabled?: boolean }[] = [
-    { id: 'home', label: 'Inicio', icon: '🏠' },
-    { id: 'tournament', label: 'Torneo', icon: '🏆', disabled: !tournament },
-    { id: 'create', label: 'Nuevo torneo', icon: '➕' },
-    { id: 'config', label: 'Configuración', icon: '⚙️' },
+  const nav: { id: View; label: string; Icon: typeof IconHome; disabled?: boolean }[] = [
+    { id: 'home', label: 'Inicio', Icon: IconHome },
+    { id: 'tournament', label: 'Torneo', Icon: IconTrophy, disabled: !tournament },
+    { id: 'create', label: 'Nuevo torneo', Icon: IconPlus },
+    { id: 'config', label: 'Configuración', Icon: IconSettings },
   ];
 
   return (
     <div className="app">
       <aside className="side">
         <div className="logo">
-          <div className="lmark">⚡</div>
+          <img src="/logo.png" alt="Swiss Duelist" className="logo-img" />
           <div><b>Swiss Duelist</b><small>Torneos suizos</small></div>
         </div>
         <nav className="anav">
@@ -154,7 +155,7 @@ export default function App() {
               disabled={n.disabled}
               onClick={() => goTo(n.id)}
             >
-              <span className="ic" style={{ fontSize: 15 }}>{n.icon}</span>
+              <n.Icon size={16} />
               {n.label}
             </button>
           ))}

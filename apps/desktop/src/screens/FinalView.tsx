@@ -1,5 +1,6 @@
 import type { Standing, Tournament } from '@swiss-duelist/engine';
 import Standings from '../components/Standings';
+import { IconSave, IconTrophy } from '../components/icons';
 
 interface Props {
   tournament: Tournament;
@@ -19,7 +20,9 @@ export default function FinalView({ tournament, standings, onSave }: Props) {
         </div>
         <span className="chip chip-ok">Torneo finalizado</span>
         <div className="sp2">
-          <button className="btn btn-pri" onClick={onSave}>💾 Guardar torneo</button>
+          <button className="btn btn-pri" onClick={onSave}>
+            <IconSave size={16} /> Guardar torneo
+          </button>
         </div>
       </div>
 
@@ -31,7 +34,7 @@ export default function FinalView({ tournament, standings, onSave }: Props) {
             <span>{second.points} pts · {second.wins}–{second.losses}</span>
           </div>
           <div className="pod pod1">
-            <small>🏆 Campeón</small>
+            <small><IconTrophy size={12} /> Campeón</small>
             <b>{first.player.name}</b>
             <span>{first.points} pts · {first.wins}–{first.losses}</span>
           </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { roundsForPlayerCount } from '@swiss-duelist/engine';
+import { IconPlay, IconPlus, IconX } from '../components/icons';
 
 interface Props {
   onStart: (name: string, players: string[]) => void;
@@ -77,14 +78,14 @@ export default function CreateTournament({ onStart, onBack }: Props) {
                     placeholder="Nombre del duelista"
                   />
                 </div>
-                <button className="btn btn-sec" onClick={addPlayer}>➕ Agregar</button>
+                <button className="btn btn-sec" onClick={addPlayer}><IconPlus size={16} /> Agregar</button>
               </div>
               {players.length > 0 ? (
                 <ul className="dlist">
                   {players.map((n) => (
                     <li className="dl-row" key={n}>
                       <b>{n}</b>
-                      <button className="dx" onClick={() => removePlayer(n)}>✕</button>
+                      <button className="dx" onClick={() => removePlayer(n)}><IconX size={16} /></button>
                     </li>
                   ))}
                 </ul>
@@ -119,7 +120,7 @@ export default function CreateTournament({ onStart, onBack }: Props) {
               <span>Al iniciar se cierra el registro y se empareja la Ronda 1. <b>No podrán sumarse nuevos duelistas.</b></span>
             </div>
             <button className="btn btn-pri big" style={{ width: '100%' }} onClick={() => onStart(name.trim(), players)}>
-              ▶ Iniciar torneo
+              <IconPlay size={16} /> Iniciar torneo
             </button>
             <div className="wfoot">
               <button className="btn btn-ghost" onClick={() => setStep(2)}>← Volver</button>

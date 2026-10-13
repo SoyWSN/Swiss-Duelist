@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Match, MatchOutcome, Player, Standing, Tournament } from '@swiss-duelist/engine';
 import Standings from '../components/Standings';
+import { IconAlert, IconClock, IconX } from '../components/icons';
 
 interface Props {
   tournament: Tournament;
@@ -22,7 +23,7 @@ function RoundClock({ round, visible }: { round: number; visible: boolean }) {
   if (!visible) return null;
   const mm = String(Math.floor(s / 60)).padStart(2, '0');
   const ss = String(s % 60).padStart(2, '0');
-  return <span className="chip chip-o chip-live">⏱ {mm}:{ss}</span>;
+  return <span className="chip chip-o chip-live"><IconClock size={14} /> {mm}:{ss}</span>;
 }
 
 function HoldButton({ onConfirm, label }: { onConfirm: () => void; label: string }) {
@@ -75,7 +76,7 @@ function ResultModal({ match, p1, p2, onClose, onSave }: {
             <span className="k">Mesa {match.table} · Ronda {match.round}</span>
             <b>{p1.name} vs {p2?.name ?? '—'}</b>
           </div>
-          <button className="xbtn" onClick={onClose}>✕</button>
+          <button className="xbtn" onClick={onClose}><IconX size={16} /></button>
         </div>
 
         <div className="vsbox">
@@ -87,17 +88,18 @@ function ResultModal({ match, p1, p2, onClose, onSave }: {
         <div className="mlab">Resultado de la partida</div>
         <div className="outs">
           <button className={`out ${selected === 'P1_WIN' ? 'sel' : ''}`} onClick={() => setSelected('P1_WIN')}>
-            <b>▲ Gana {p1.name}</b>
+            <b>Gana {p1.name}</b>
           </button>
           <button className={`out ${selected === 'P2_WIN' ? 'sel' : ''}`} onClick={() => setSelected('P2_WIN')}>
-            <b>Gana {p2?.name} ▲</b>
+            <b>Gana {p2?.name}</b>
           </button>
           <button
             className={`out dl ${selected === 'DOUBLE_LOSS' ? 'sel' : ''}`}
             onClick={() => setSelected('DOUBLE_LOSS')}
             title="0 puntos para ambos · castiga el OMW de los dos"
           >
-            <b>⚠ Doble Loss</b>
+            <IconAlert size={16} />
+            <b>Doble Loss</b>
           </button>
         </div>
 
@@ -127,7 +129,7 @@ function NextRoundModal({ matches, nameOf, isLastRound, onCancel, onConfirm }: {
             <span className="k">Cierre de ronda</span>
             <b>Resultados de la ronda</b>
           </div>
-          <button className="xbtn" onClick={onCancel}>✕</button>
+          <button className="xbtn" onClick={onCancel}><IconX size={16} /></button>
         </div>
         <p className="muted" style={{ marginBottom: 12 }}>Verifica cada resultado antes de avanzar.</p>
         <div className="rlist">

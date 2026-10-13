@@ -1,4 +1,5 @@
 import type { Standing } from '@swiss-duelist/engine';
+import { IconX } from './icons';
 
 interface Props {
   standings: Standing[];
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export default function Standings({ standings, onDrop, final }: Props) {
+  const showDrop = Boolean(onDrop);
   return (
     <div className="card" style={{ padding: '6px 14px' }}>
       <table className="tbl">
@@ -20,7 +22,7 @@ export default function Standings({ standings, onDrop, final }: Props) {
             <th className="num">Récord</th>
             <th className="num">OMW%</th>
             <th className="num">OOMW%</th>
-            <th></th>
+            {showDrop && <th></th>}
           </tr>
         </thead>
         <tbody>
@@ -43,18 +45,20 @@ export default function Standings({ standings, onDrop, final }: Props) {
                 <td className="num rec">{s.wins}–{s.losses}</td>
                 <td className="num">{(s.omw * 100).toFixed(1)}</td>
                 <td className="num">{(s.oomw * 100).toFixed(1)}</td>
-                <td>
-                  {onDrop && !s.player.dropped ? (
-                    <button
-                      className="btn btn-ghost"
-                      style={{ padding: '5px 8px' }}
-                      title="Marcar como retirado (drop)"
-                      onClick={() => onDrop(s.player.id)}
-                    >
-                      ✕
-                    </button>
-                  ) : null}
-                </td>
+                {showDrop && (
+                  <td>
+                    {!s.player.dropped ? (
+                      <button
+                        className="btn btn-ghost"
+                        style={{ padding: '5px 8px' }}
+                        title="Marcar como retirado (drop)"
+                        onClick={() => onDrop!(s.player.id)}
+                      >
+                        <IconX size={14} />
+                      </button>
+                    ) : null}
+                  </td>
+                )}
               </tr>
             );
           })}
