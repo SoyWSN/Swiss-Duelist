@@ -99,6 +99,9 @@ button { font-family: inherit; }
 .rhead { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
 .rhead b { font-size: 15px; font-weight: 750; }
 .rhead small { display: block; font-size: 11px; color: var(--tx-3); margin-top: 2px; }
+.rfoot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; }
+.rdel { background: none; border: 1px solid var(--line-2); border-radius: 8px; padding: 5px 8px; color: var(--tx-3); cursor: pointer; display: inline-flex; transition: .15s; }
+.rdel:hover { color: var(--bad); border-color: rgba(244,63,94,.5); background: rgba(244,63,94,.08); }
 .link { margin-top: 10px; font-size: 12.5px; color: var(--o-300); font-weight: 700; cursor: pointer; background: none; border: none; padding: 0; text-align: left; }
 .link:hover { text-decoration: underline; }
 

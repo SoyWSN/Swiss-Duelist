@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { MatchOutcome, Tournament } from '@swiss-duelist/engine';
 import { computeStandings, createTournament, pairRound, roundsForPlayerCount } from '@swiss-duelist/engine';
-import { listTournaments, loadTournament, saveTournament, type TournamentSummary } from './db/repo';
+import { listTournaments, loadTournament, saveTournament, deleteTournament, type TournamentSummary } from './db/repo';
 import { initDb } from './db/db';
 import { IconHome, IconPlus, IconSettings, IconTrophy } from './components/icons';
 import Home from './screens/Home';
@@ -122,6 +122,18 @@ export default function App() {
     setView('home');
   }
 
+  function handleDelete(id: string): void {
+    void deleteTournament(id).then(() => {
+      if (tournament?.id === id) setTournament(null);
+      refreshSummaries();
+    });
+  }
+
+  function discardAndClose(): void {
+    if (tournament) handleDelete(tournament.id);
+    setView('home');
+  }
+
   function goTo(id: View): void {
     if (id === 'tournament' && tournament?.status === 'finished') setView('final');
     else setView(id);
@@ -171,7 +183,12 @@ export default function App() {
         <div className="content">
           <div className="view-fade" key={view}>
             {view === 'home' && (
-              <Home summaries={summaries} onCreate={() => setView('create')} onOpen={openTournament} />
+              <Home
+                summaries={summaries}
+                onCreate={() => setView('create')}
+                onOpen={openTournament}
+                onDelete={handleDelete}
+              />
             )}
             {view === 'create' && (
               <CreateTournament onStart={startTournament} onBack={() => setView('home')} />
@@ -187,7 +204,7 @@ export default function App() {
               />
             )}
             {view === 'final' && tournament && (
-              <FinalView tournament={tournament} standings={standings} onSave={saveAndClose} />
+              <FinalView tournament={tournament} standings={standings} onSave={saveAndClose} onDiscard={discardAndClose} />
             )}
             {view === 'config' && <Config clockOn={clockOn} onToggleClock={setClockOn} />}
           </div>
