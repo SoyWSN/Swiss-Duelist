@@ -175,6 +175,10 @@ La aplicación guarda **únicamente la información de tus torneos** — nombres
 
 Y tienes el **control total**: puedes **eliminar cualquier torneo directamente desde la aplicación** (botón de borrar en la sección Torneos), y con él desaparece toda su información guardada.
 
+## Licencia
+
+El código de este proyecto está bajo la licencia **MIT** — puedes usarlo, modificarlo y compartirlo libremente, siempre que mantengas el aviso de copyright. Ver el archivo [LICENSE](LICENSE).
+
 ## Aviso legal
 
 El arte de **Yu-Gi-Oh!** utilizado en la interfaz es propiedad de **Konami / Studio Dice**. Este es un proyecto **fan-made y sin fines de lucro**, creado para organizar torneos locales.
