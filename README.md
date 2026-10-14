@@ -163,7 +163,7 @@ Soy **WSN**. Además de pertenecer a la comunidad de **Yu-Gi-Oh!**, estoy en pro
 
 Creé **Swiss Duelist** para resolver un problema concreto: no encontrar una herramienta realmente adecuada para organizar torneos de este juego. Las opciones disponibles son limitadas — muchas requieren conexión a internet, resultan complicadas de usar, tienen interfaces anticuadas o están saturadas de anuncios.
 
-Mi propuesta es distinta: una aplicación **ligera**, **completamente local** y con una interfaz **amigable y elegante**, que representa el juego como se merece.
+Mi propuesta es distinta: una aplicación **ligera**, **completamente local** y con una interfaz **amigable, elegante y 100% gratuita**, que representa el juego como se merece.
 
 Espero que sea de tu agrado. Cualquier comentario o reseña será tomado en cuenta para seguir mejorando y dándole soporte a este proyecto.
 
