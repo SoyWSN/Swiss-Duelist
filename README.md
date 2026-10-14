@@ -167,6 +167,14 @@ Mi propuesta es distinta: una aplicación **ligera**, **completamente local** y 
 
 Espero que sea de tu agrado. Cualquier comentario o reseña será tomado en cuenta para seguir mejorando y dándole soporte a este proyecto.
 
+## Privacidad y datos
+
+**Swiss Duelist es una aplicación completamente local.** No se conecta a internet, no requiere crear una cuenta y no envía información a ningún servidor externo.
+
+La aplicación guarda **únicamente la información de tus torneos** — nombres de los duelistas, emparejamientos y resultados — en una **base de datos SQLite local**, dentro de tu propia computadora. No recopila datos personales, de uso, ni de ningún otro tipo.
+
+Y tienes el **control total**: puedes **eliminar cualquier torneo directamente desde la aplicación** (botón de borrar en la sección Torneos), y con él desaparece toda su información guardada.
+
 ## Aviso legal
 
 El arte de **Yu-Gi-Oh!** utilizado en la interfaz es propiedad de **Konami / Studio Dice**. Este es un proyecto **fan-made y sin fines de lucro**, creado para organizar torneos locales.
