@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="apps/desktop/src-tauri/icons/128x128@2x.png" width="120" alt="Swiss Duelist" />
+  <img src="docs/banner.png" width="100%" alt="Swiss Duelist" />
 </p>
 
 <h1 align="center">Swiss Duelist</h1>
@@ -152,6 +152,20 @@ npm run tauri dev -w desktop
 # Compilar el instalador
 npm run tauri build -w desktop
 ```
+
+## Sobre mí
+
+<p align="center">
+  <img src="docs/pollo.png" width="340" alt="WSN" />
+</p>
+
+Soy **WSN**. Además de pertenecer a la comunidad de **Yu-Gi-Oh!**, estoy en proceso de formarme como **Ingeniero de Desarrollo y Gestión de Software**.
+
+Creé **Swiss Duelist** para resolver un problema concreto: no encontrar una herramienta realmente adecuada para organizar torneos de este juego. Las opciones disponibles son limitadas — muchas requieren conexión a internet, resultan complicadas de usar, tienen interfaces anticuadas o están saturadas de anuncios.
+
+Mi propuesta es distinta: una aplicación **ligera**, **completamente local** y con una interfaz **amigable y elegante**, que representa el juego como se merece.
+
+Espero que sea de tu agrado. Cualquier comentario o reseña será tomado en cuenta para seguir mejorando y dándole soporte a este proyecto.
 
 ## Aviso legal
 
